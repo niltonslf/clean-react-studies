@@ -8,6 +8,9 @@
     "@typescript-eslint/strict-boolean-expressions": "off",
     "semi": "off",
     "import/prefer-default-export": "off",
-    "jsx-quotes": ["error", "prefer-single"]
+    "space-before-function-paren": "off",
+    "@typescript-eslint/space-before-function-paren": "off",
+    "jsx-quotes": ["error", "prefer-single"],
+    "prettier": {}
   }
 }
