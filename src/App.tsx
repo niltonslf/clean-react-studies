@@ -1,7 +1,4 @@
-import { useState } from 'react'
-
-function App() {
-
+function App () {
   return (
     <div className="App">
      home

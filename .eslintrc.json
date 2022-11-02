@@ -1,11 +1,13 @@
 {
-    "extends": "standard-with-typescript",
-    "parserOptions": {
-        "project": "./tsconfig.json"
-    },
-    "rules": {
-        "@typescript-eslint/consistent-type-definitions": "off",
-        "@typescript-eslint/strict-boolean-expressions": "off",
-        "semi": "off"
-    }
+  "extends": "standard-with-typescript",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "@typescript-eslint/consistent-type-definitions": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "semi": "off",
+    "import/prefer-default-export": "off",
+    "jsx-quotes": ["error", "prefer-single"]
+  }
 }
