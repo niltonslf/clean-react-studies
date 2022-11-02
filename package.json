@@ -12,7 +12,8 @@
     "test:staged": "yarn test -- --findRelatedTests",
     "test:ci": "yarn test -- --coverage",
     "prepare": "husky install",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "lint": " yarn eslint . --fix"
   },
   "dependencies": {
     "react": "^18.2.0",
