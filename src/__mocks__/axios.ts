@@ -2,5 +2,5 @@
 // export default mockAxios
 
 export default {
-  post: jest.fn(async () => await Promise.resolve())
+  post: jest.fn(async () => await Promise.resolve({ status: 200, data: {} }))
 }
