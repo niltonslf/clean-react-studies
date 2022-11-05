@@ -1,3 +1,5 @@
+import Input from '@/presentation/components/Form/Input'
+import Submit from '@/presentation/components/Form/Submit'
 import Loader from '@/presentation/components/Loader'
 import './login-styles.scss'
 
@@ -11,11 +13,9 @@ const Login: React.FC = () => {
         </header>
 
         <form className='login-form'>
-          <input type='email' name='email' placeholder='Type your mail' className='form-control' />
-          <input type='password' placeholder='Type your password' className='form-control' />
-          <button type='submit' className='form-button'>
-            Login
-          </button>
+          <Input type='email' name='email' placeholder='Type your mail' />
+          <Input type='password' placeholder='Type your password' />
+          <Submit>Login</Submit>
           <a href='#'>Don't have an account? Create one here</a>
         </form>
         <Loader />
