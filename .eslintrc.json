@@ -1,5 +1,14 @@
 {
-  "extends": ["standard-with-typescript", "prettier"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+
+  "extends": ["plugin:react/recommended", "standard-with-typescript", "prettier"],
+
+  "plugins": ["react"],
+
   "parserOptions": {
     "project": "./tsconfig.json"
   },
@@ -16,6 +25,8 @@
     "indent": [2],
     "@typescript-eslint/indent": [2],
     "no-tabs": "error",
-    "@typescript-eslint/no-tabs": "off"
+    "@typescript-eslint/no-tabs": "off",
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error"
   }
 }
