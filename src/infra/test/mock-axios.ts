@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 import { faker } from '@faker-js/faker'
 
 export const mockAxios = (): jest.Mocked<typeof axios> => {

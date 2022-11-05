@@ -1,5 +1,6 @@
-import { Input, Submit, Loader } from '@/presentation/components'
 import './login-styles.scss'
+
+import { Input, Submit, Loader } from '@/presentation/components'
 
 const Login: React.FC = () => {
   return (

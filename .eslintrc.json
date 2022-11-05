@@ -7,7 +7,7 @@
 
   "extends": ["plugin:react/recommended", "standard-with-typescript", "prettier"],
 
-  "plugins": ["react"],
+  "plugins": ["react", "import", "eslint-plugin-import-helpers"],
 
   "parserOptions": {
     "project": "./tsconfig.json"
@@ -24,6 +24,7 @@
     "@typescript-eslint/explicit-function-return-type": "off",
     "indent": [2],
     "@typescript-eslint/indent": [2],
+    "max-len": ["error", { "code": 110, "tabWidth": 2 }],
     "no-tabs": "error",
     "@typescript-eslint/no-tabs": "off",
     "react/jsx-uses-react": "off",
@@ -45,6 +46,14 @@
         "selector": "variable",
         "modifiers": ["destructured"],
         "format": null
+      }
+    ],
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "groups": ["module", "/^@/", ["parent", "sibling", "index"]],
+        "alphabetize": { "order": "asc", "ignoreCase": true }
       }
     ]
   }
