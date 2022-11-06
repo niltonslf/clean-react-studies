@@ -26,7 +26,9 @@ const Login: React.FC<LoginProps> = ({ validation, authentication }) => {
       if (state.isLoading) return
 
       setState(() => ({ ...state, isLoading: true }))
-      await authentication.auth({ email: state.email, password: state.password })
+      const response = await authentication.auth({ email: state.email, password: state.password })
+
+      if (response?.accessToken) localStorage.setItem('accessToken', response?.accessToken)
     } catch (error: any) {
       setState((state) => ({ ...state, isLoading: false, requestError: error.message }))
     }
@@ -49,7 +51,7 @@ const Login: React.FC<LoginProps> = ({ validation, authentication }) => {
         </header>
 
         <FormContext.Provider value={{ state, setState }}>
-          <form className='login-form' onSubmit={handleSubmit}>
+          <form data-testid='form' className='login-form' onSubmit={handleSubmit}>
             <Input
               data-testid='email'
               required
