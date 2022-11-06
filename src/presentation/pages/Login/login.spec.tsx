@@ -1,10 +1,21 @@
-import { render } from '@testing-library/react'
+import { render, RenderResult } from '@testing-library/react'
 
 import Login from './index'
 
+type SutTypes = {
+  sut: RenderResult
+}
+
+const makeSut = (): SutTypes => {
+  const sut = render(<Login />)
+  return { sut }
+}
+
 describe('Login Component', () => {
   test('Should render with initial state', () => {
-    const { getByTestId } = render(<Login />)
+    const { sut } = makeSut()
+    const { getByTestId } = sut
+
     const errorWrap = getByTestId('error-wrap')
     expect(errorWrap.childElementCount).toBe(0)
 
