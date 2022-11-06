@@ -18,6 +18,10 @@ const Login: React.FC<LoginProps> = ({ validation }) => {
     validation.validate({ email: state.email })
   }, [state.email])
 
+  useEffect(() => {
+    validation.validate({ password: state.password })
+  }, [state.password])
+
   return (
     <section className='container'>
       <article className='container-content'>
