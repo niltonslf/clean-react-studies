@@ -8,7 +8,7 @@ export class AxiosHttpClient implements HttpPostClient<any, any> {
 
     return {
       statusCode: response.status,
-      body: response.data
+      body: response.data,
     }
   }
 }

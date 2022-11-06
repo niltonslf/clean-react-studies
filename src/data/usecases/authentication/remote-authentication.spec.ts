@@ -1,4 +1,3 @@
-
 import { HttpStatusCode } from '@/data/protocols/http'
 import { HttpPostClientSpy } from '@/data/test'
 import { InvalidCredentialsError, UnexpectedError } from '@/domain/errors'
@@ -20,7 +19,7 @@ const makeSut = (url: string = faker.internet.url()): SutTypes => {
 
   return {
     sut,
-    httpPostClientSpy
+    httpPostClientSpy,
   }
 }
 
@@ -87,7 +86,7 @@ describe('RemoteAuthentication', () => {
 
     httpPostClientSpy.response = {
       statusCode: HttpStatusCode.ok,
-      body: httpResult
+      body: httpResult,
     }
 
     const account = await sut.auth(mockAuthentication())
