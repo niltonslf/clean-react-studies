@@ -1,7 +1,9 @@
 import { InvalidCredentialsError } from '@/domain/errors'
 import { AuthenticationSpy, ValidationSpy } from '@/presentation/test'
 import { faker } from '@faker-js/faker'
-import { cleanup, fireEvent, render, RenderResult } from '@testing-library/react'
+import { cleanup, fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
+
+import 'jest-localstorage-mock'
 
 import Login from './index'
 
@@ -36,6 +38,7 @@ const simulateValidSubmit = (
 
 describe('Login Component', () => {
   afterEach(cleanup)
+  beforeEach(() => localStorage.clear())
 
   test('Should render with initial state', () => {
     const { sut } = makeSut()
@@ -132,5 +135,17 @@ describe('Login Component', () => {
       expect(mainError.textContent).toBe(error.message)
       expect(errorWrap.childElementCount).toBe(1)
     }, 5000)
+  })
+
+  test('should add token to localStorage on sucess', async () => {
+    const { sut, authenticationSpy } = makeSut()
+    simulateValidSubmit(sut)
+
+    await waitFor(() => sut.getByTestId('form'))
+
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      'accessToken',
+      authenticationSpy.account.accessToken
+    )
   })
 })
