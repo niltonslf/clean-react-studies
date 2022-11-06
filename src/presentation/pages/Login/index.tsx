@@ -1,6 +1,7 @@
 import './login-styles.scss'
 
-import { Input, Submit, Loader } from '@/presentation/components'
+import { Input, Submit, FormStatus } from '@/presentation/components'
+import { withFormProvider } from '@/presentation/components/Form/context'
 
 const Login: React.FC = () => {
   return (
@@ -17,7 +18,7 @@ const Login: React.FC = () => {
           <Submit>Login</Submit>
           <a href='#'>Don't have an account? Create one here</a>
         </form>
-        <Loader />
+        <FormStatus />
       </article>
       <div className='container-illustration'></div>
     </section>
@@ -25,4 +26,4 @@ const Login: React.FC = () => {
 }
 
 Login.displayName = 'Login'
-export default Login
+export default withFormProvider(Login)
