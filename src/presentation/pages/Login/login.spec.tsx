@@ -68,4 +68,20 @@ describe('Login Component', () => {
 
     expect(submitButton.disabled).toBe(false)
   })
+
+  test('should enable submit button when type email and password', () => {
+    const { sut } = makeSut()
+
+    const emailInput = sut.getByTestId('email')
+    fireEvent.input(emailInput, { target: { value: faker.internet.email() } })
+
+    const passwordInput = sut.getByTestId('password')
+    fireEvent.input(passwordInput, { target: { value: faker.internet.password() } })
+
+    const submitButton = sut.getByTestId('submit') as HTMLButtonElement
+    fireEvent.click(submitButton)
+
+    const Loader = sut.getByTestId('loader')
+    expect(Loader).toBeTruthy()
+  })
 })
