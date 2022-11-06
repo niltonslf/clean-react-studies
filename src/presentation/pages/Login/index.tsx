@@ -2,22 +2,25 @@ import './login-styles.scss'
 
 import React, { useEffect, useState } from 'react'
 
+import { Authentication } from '@/domain/usecases'
 import { Input, Submit, FormStatus } from '@/presentation/components'
 import { StateProps, FormContext } from '@/presentation/components/Form/context'
 import { Validation } from '@/presentation/protocols/validation'
 
 interface LoginProps {
   validation: Validation
+  authentication: Authentication
 }
 
-const Login: React.FC<LoginProps> = ({ validation }) => {
+const Login: React.FC<LoginProps> = ({ validation, authentication }) => {
   const initialState = { isLoading: false, mainError: '', email: '', password: '' }
   const [state, setState] = useState<StateProps>(initialState)
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
 
     setState(() => ({ ...state, isLoading: true }))
+    await authentication.auth({ email: state.email, password: state.password })
   }
 
   useEffect(() => {
