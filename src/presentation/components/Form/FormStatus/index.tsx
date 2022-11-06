@@ -5,12 +5,12 @@ import { FormContext, FormContextProps } from '@/presentation/components/Form/co
 
 const FormStatus = () => {
   const { state } = useContext(FormContext) as FormContextProps
-  const { isLoading, mainError } = state
+  const { isLoading, requestError } = state
 
   return (
     <div data-testid='error-wrap'>
       {isLoading && <Loader />}
-      {mainError && <span>{mainError}</span>}
+      {requestError && <span data-testid='main-error'>{requestError}</span>}
     </div>
   )
 }

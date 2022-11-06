@@ -4,7 +4,7 @@ export type StateProps = {
   isLoading: boolean
   email: string
   password: string
-  mainError: string
+  requestError: string
 }
 
 export interface FormContextProps {

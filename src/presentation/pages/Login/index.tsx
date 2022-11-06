@@ -13,16 +13,23 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = ({ validation, authentication }) => {
-  const initialState = { isLoading: false, mainError: '', email: '', password: '' }
-  const [state, setState] = useState<StateProps>(initialState)
+  const [state, setState] = useState<StateProps>({
+    isLoading: false,
+    requestError: '',
+    email: '',
+    password: '',
+  })
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
+    try {
+      if (state.isLoading) return
 
-    if (state.isLoading) return
-
-    setState(() => ({ ...state, isLoading: true }))
-    await authentication.auth({ email: state.email, password: state.password })
+      setState(() => ({ ...state, isLoading: true }))
+      await authentication.auth({ email: state.email, password: state.password })
+    } catch (error: any) {
+      setState((state) => ({ ...state, isLoading: false, requestError: error.message }))
+    }
   }
 
   useEffect(() => {
@@ -59,8 +66,8 @@ const Login: React.FC<LoginProps> = ({ validation, authentication }) => {
             />
             <Submit>Login</Submit>
             <a href='#'>Don't have an account? Create one here</a>
+            <FormStatus />
           </form>
-          <FormStatus />
         </FormContext.Provider>
       </article>
       <div className='container-illustration'></div>
