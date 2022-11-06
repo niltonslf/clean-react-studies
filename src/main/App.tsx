@@ -1,4 +1,4 @@
-import Routes from './routes'
+import Routes from '../presentation/routes'
 import './styles/global-styles.scss'
 
 function App() {
