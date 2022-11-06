@@ -1,27 +1,16 @@
-import React, { createContext, useState } from 'react'
+import { createContext } from 'react'
 
 export type StateProps = {
   isLoading: boolean
-  errorMessage: string
+  email: string
+  password: string
+  mainError: string
 }
 
-const initialState = { isLoading: false, errorMessage: '' }
+export interface FormContextProps {
+  state: StateProps
+  setState: (value: any) => void
+}
 
-export const FormContext = createContext<StateProps>(initialState)
+export const FormContext = createContext<FormContextProps | null>(null)
 FormContext.displayName = 'FormContext'
-
-export const Provider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [state] = useState<StateProps>(initialState)
-
-  return <FormContext.Provider value={state}>{children}</FormContext.Provider>
-}
-
-export const withFormProvider =
-  <T,>(Component: React.ComponentType<T>) =>
-  (props: React.PropsWithChildren<T>) => {
-    return (
-      <Provider>
-        <Component {...props} />
-      </Provider>
-    )
-  }

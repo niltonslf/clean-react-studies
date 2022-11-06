@@ -1,15 +1,16 @@
 import { useContext } from 'react'
 
 import { Loader } from '@/presentation/components'
-import { FormContext } from '@/presentation/components/Form/context'
+import { FormContext, FormContextProps } from '@/presentation/components/Form/context'
 
 const FormStatus = () => {
-  const { isLoading, errorMessage } = useContext(FormContext)
+  const { state } = useContext(FormContext) as FormContextProps
+  const { isLoading, mainError } = state
 
   return (
     <div data-testid='error-wrap'>
       {isLoading && <Loader />}
-      {errorMessage && <span>Error message</span>}
+      {mainError && <span>{mainError}</span>}
     </div>
   )
 }
