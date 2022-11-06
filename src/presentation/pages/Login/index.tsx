@@ -15,7 +15,7 @@ const Login: React.FC = () => {
         <form className='login-form'>
           <Input type='email' name='email' placeholder='Type your mail' />
           <Input type='password' placeholder='Type your password' />
-          <Submit>Login</Submit>
+          <Submit disabled>Login</Submit>
           <a href='#'>Don't have an account? Create one here</a>
         </form>
         <FormStatus />

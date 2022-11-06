@@ -5,7 +5,7 @@ type InputProps = React.DetailedHTMLProps<ReactButton, HTMLButtonElement>
 
 const Submit: React.FC<InputProps> = ({ children, ...props }) => {
   return (
-    <button {...props} type='submit' className='form-button'>
+    <button data-testid='submit' {...props} type='submit' className='form-button'>
       {children}
     </button>
   )

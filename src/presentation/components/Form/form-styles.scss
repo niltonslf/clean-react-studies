@@ -1,13 +1,27 @@
+@import '../../styles/colors.scss';
+
 .form-control {
   padding: 15px 10px;
-  border: 1px solid #ccc;
+  border: 1px solid $label;
   margin-bottom: 0.5rem;
 }
 
 .form-button {
   width: 100%;
-  color: white;
-  background: black;
+  color: $secondary;
+  background: $primary;
   padding: 20px 10px;
   margin-top: 1rem;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
+
+  &:disabled {
+    background: $disabled;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
