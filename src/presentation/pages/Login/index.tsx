@@ -1,6 +1,6 @@
 import './login-styles.scss'
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Input, Submit, FormStatus } from '@/presentation/components'
 import { StateProps, FormContext } from '@/presentation/components/Form/context'
@@ -13,6 +13,12 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = ({ validation }) => {
   const initialState = { isLoading: false, mainError: '', email: '', password: '' }
   const [state, setState] = useState<StateProps>(initialState)
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault()
+
+    setState(() => ({ ...state, isLoading: true }))
+  }
 
   useEffect(() => {
     validation.validate('email', state.email)
@@ -31,7 +37,7 @@ const Login: React.FC<LoginProps> = ({ validation }) => {
         </header>
 
         <FormContext.Provider value={{ state, setState }}>
-          <form className='login-form'>
+          <form className='login-form' onSubmit={handleSubmit}>
             <Input
               data-testid='email'
               required
