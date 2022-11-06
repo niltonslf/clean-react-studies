@@ -1,5 +1,5 @@
 import Routes from './routes'
-import './global-styles.scss'
+import './styles/global-styles.scss'
 
 function App() {
   return <Routes />
