@@ -46,7 +46,7 @@ const Login: React.FC<LoginProps> = ({ validation }) => {
               type='password'
               placeholder='Type your password'
             />
-            <Submit disabled>Login</Submit>
+            <Submit>Login</Submit>
             <a href='#'>Don't have an account? Create one here</a>
           </form>
           <FormStatus />
