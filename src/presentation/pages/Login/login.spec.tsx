@@ -56,4 +56,16 @@ describe('Login Component', () => {
     expect(validationSpy.fieldName).toEqual('password')
     expect(validationSpy.fieldValue).toEqual(passwordFaker)
   })
+
+  test('should enable submit button when type email and password', () => {
+    const { sut } = makeSut()
+    const passwordInput = sut.getByTestId('password')
+    const emailInput = sut.getByTestId('email')
+    const submitButton = sut.getByTestId('submit') as HTMLButtonElement
+
+    fireEvent.input(emailInput, { target: { value: faker.internet.email() } })
+    fireEvent.input(passwordInput, { target: { value: faker.internet.password() } })
+
+    expect(submitButton.disabled).toBe(false)
+  })
 })
