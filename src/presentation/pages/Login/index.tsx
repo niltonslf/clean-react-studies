@@ -1,6 +1,7 @@
 import './login-styles.scss'
 
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import { Authentication } from '@/domain/usecases'
 import { Input, Submit, FormStatus } from '@/presentation/components'
@@ -67,7 +68,9 @@ const Login: React.FC<LoginProps> = ({ validation, authentication }) => {
               placeholder='Type your password'
             />
             <Submit>Login</Submit>
-            <a href='#'>Don't have an account? Create one here</a>
+            <Link to='/signup' data-testid='register'>
+              Don't have an account? Create one here
+            </Link>
             <FormStatus />
           </form>
         </FormContext.Provider>
