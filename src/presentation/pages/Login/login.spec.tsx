@@ -16,7 +16,7 @@ type SutTypes = {
   authenticationSpy: AuthenticationSpy
 }
 
-const history = createMemoryHistory()
+const history = createMemoryHistory({ initialEntries: ['/login'] })
 
 const makeSut = (): SutTypes => {
   const validationSpy = new ValidationSpy()
@@ -158,6 +158,7 @@ describe('Login Component', () => {
       'accessToken',
       authenticationSpy.account.accessToken
     )
+    expect(history.location.pathname).toBe('/')
   })
 
   test('should go to signup page', () => {
