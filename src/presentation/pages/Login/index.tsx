@@ -1,7 +1,7 @@
 import './login-styles.scss'
 
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { Authentication } from '@/domain/usecases'
 import { Input, Submit, FormStatus } from '@/presentation/components'
@@ -14,6 +14,8 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = ({ validation, authentication }) => {
+  const navigate = useNavigate()
+
   const [state, setState] = useState<StateProps>({
     isLoading: false,
     requestError: '',
@@ -30,6 +32,7 @@ const Login: React.FC<LoginProps> = ({ validation, authentication }) => {
       const response = await authentication.auth({ email: state.email, password: state.password })
 
       if (response?.accessToken) localStorage.setItem('accessToken', response?.accessToken)
+      navigate('/')
     } catch (error: any) {
       setState((state) => ({ ...state, isLoading: false, requestError: error.message }))
     }
