@@ -7,7 +7,8 @@
 ├──── models
 ├──── usecases
 ├── infra
-└── components
+├── presentation
+└── validation
 ```
 
 ## Infra
@@ -25,6 +26,10 @@
 - Local onde é mantido as regras de negócios
 - É independente das demais camadas
 
-## Components
+## presentation
 
 - Componentes visuais da aplicação
+
+## validation
+
+- camada de validação de formulário
