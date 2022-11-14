@@ -66,26 +66,21 @@ describe('Login Component', () => {
     expect(passwordInput.value).toBe('')
   })
 
-  test('should call validation with correct email ', () => {
-    const { sut, validationSpy } = makeSut()
-    const emailFaker = faker.internet.email()
-
-    const emailInput = sut.getByTestId('email')
-    fireEvent.input(emailInput, { target: { value: emailFaker } })
-
-    expect(validationSpy.fieldName).toEqual('email')
-    expect(validationSpy.fieldValue).toEqual(emailFaker)
-  })
-
-  test('should call validation with correct password ', () => {
+  test('should return error on password or email field ', () => {
     const { sut, validationSpy } = makeSut()
     const passwordFaker = faker.internet.password()
 
     const passwordInput = sut.getByTestId('password')
-    fireEvent.input(passwordInput, { target: { value: passwordFaker } })
+    const emailInput = sut.getByTestId('email')
 
-    expect(validationSpy.fieldName).toEqual('password')
-    expect(validationSpy.fieldValue).toEqual(passwordFaker)
+    fireEvent.input(passwordInput, { target: { value: passwordFaker } })
+    fireEvent.input(emailInput, { target: { value: passwordFaker } })
+
+    const errorMessage = faker.random.words()
+    validationSpy.errorMessage = errorMessage
+
+    expect(validationSpy.validate('password', faker.random.words())).toBe(errorMessage)
+    expect(validationSpy.validate('email', faker.random.words())).toBe(errorMessage)
   })
 
   test('should enable submit button when type email and password', () => {
