@@ -148,7 +148,7 @@ describe('Login Component', () => {
     }, 5000)
   })
 
-  test('should add token to localStorage on sucess', async () => {
+  test('should add token to localStorage on success', async () => {
     const { sut, authenticationSpy } = makeSut()
     simulateValidSubmit(sut)
 
