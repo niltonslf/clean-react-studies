@@ -21,6 +21,8 @@ const Login: React.FC<LoginProps> = ({ validation, authentication }) => {
     requestError: '',
     email: '',
     password: '',
+    emailError: '',
+    passwordError: '',
   })
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
@@ -39,12 +41,12 @@ const Login: React.FC<LoginProps> = ({ validation, authentication }) => {
   }
 
   useEffect(() => {
-    validation.validate('email', state.email)
-  }, [state.email])
-
-  useEffect(() => {
-    validation.validate('password', state.password)
-  }, [state.password])
+    setState((state) => ({
+      ...state,
+      emailError: validation.validate('email', state.email),
+      passwordError: validation.validate('password', state.password),
+    }))
+  }, [state.email, state.password])
 
   return (
     <section className='container'>
@@ -56,20 +58,36 @@ const Login: React.FC<LoginProps> = ({ validation, authentication }) => {
 
         <FormContext.Provider value={{ state, setState }}>
           <form data-testid='form' className='login-form' onSubmit={handleSubmit}>
-            <Input
-              data-testid='email'
-              required
-              type='email'
-              name='email'
-              placeholder='Type your mail'
-            />
-            <Input
-              name='password'
-              data-testid='password'
-              required
-              type='password'
-              placeholder='Type your password'
-            />
+            <div className='form-group'>
+              <Input
+                data-testid='email'
+                required
+                type='email'
+                name='email'
+                placeholder='Type your mail'
+              />
+              {!state.isLoading && state.emailError && (
+                <div data-testid='main-error' className='form-error'>
+                  {state.emailError}
+                </div>
+              )}
+            </div>
+
+            <div className='form-group'>
+              <Input
+                name='password'
+                data-testid='password'
+                required
+                type='password'
+                placeholder='Type your password'
+              />
+
+              {!state.isLoading && state.passwordError && (
+                <div data-testid='main-error' className='form-error'>
+                  {state.passwordError}
+                </div>
+              )}
+            </div>
             <Submit>Login</Submit>
             <Link to='/signup' data-testid='register'>
               Don't have an account? Create one here

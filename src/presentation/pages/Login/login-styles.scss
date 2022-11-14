@@ -62,11 +62,19 @@
   }
 }
 
+.form-group {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
 .form-status {
   display: flex;
   justify-content: center;
   margin-top: 1rem;
+  flex-wrap: wrap;
 }
 .form-error {
-  color: red;
+  color: rgb(194, 99, 99);
+  display: flex;
+  width: 100%;
 }

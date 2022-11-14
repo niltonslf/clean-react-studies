@@ -4,6 +4,8 @@ export type StateProps = {
   isLoading: boolean
   email: string
   password: string
+  emailError: string | null
+  passwordError: string | null
   requestError: string
 }
 
