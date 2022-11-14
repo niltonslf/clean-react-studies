@@ -100,7 +100,7 @@ describe('Login Component', () => {
     expect(submitButton.disabled).toBe(false)
   })
 
-  test('should enable submit button when type email and password', () => {
+  test('should show Loader when pressed submit', () => {
     const { sut } = makeSut()
 
     simulateValidSubmit(sut)
