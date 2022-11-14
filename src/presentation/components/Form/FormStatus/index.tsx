@@ -8,9 +8,13 @@ const FormStatus = () => {
   const { isLoading, requestError } = state
 
   return (
-    <div data-testid='error-wrap'>
+    <div data-testid='error-wrap' className='form-status'>
       {isLoading && <Loader />}
-      {requestError && <span data-testid='main-error'>{requestError}</span>}
+      {!isLoading && requestError && (
+        <span data-testid='main-error' className='form-error'>
+          {requestError}
+        </span>
+      )}
     </div>
   )
 }
