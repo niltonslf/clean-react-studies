@@ -11,9 +11,9 @@ const FormStatus = () => {
     <div data-testid='error-wrap' className='form-status'>
       {isLoading && <Loader />}
       {!isLoading && requestError && (
-        <span data-testid='main-error' className='form-error'>
+        <div data-testid='main-error' className='form-error'>
           {requestError}
-        </span>
+        </div>
       )}
     </div>
   )
