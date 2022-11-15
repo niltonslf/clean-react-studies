@@ -4,5 +4,8 @@ import { Authentication } from '@/domain/usecases'
 import { makeAxiosHttpClientFactory } from '../../http/axios-http-client-factory'
 
 export const makeRemoteAuthenticationFactory = (): Authentication => {
-  return new RemoteAuthentication('/login', makeAxiosHttpClientFactory())
+  return new RemoteAuthentication(
+    'http://fordevs.herokuapp.com/api/login',
+    makeAxiosHttpClientFactory()
+  )
 }

@@ -1,3 +1,5 @@
+import { expect, describe, test } from 'vitest'
+
 import { HttpStatusCode } from '@/data/protocols/http'
 import { HttpPostClientSpy } from '@/data/test'
 import { InvalidCredentialsError, UnexpectedError } from '@/domain/errors'

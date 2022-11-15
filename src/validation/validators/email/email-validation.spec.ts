@@ -1,3 +1,5 @@
+import { expect, describe, test } from 'vitest'
+
 import { InvalidFieldError } from '@/validation/errors'
 import { faker } from '@faker-js/faker'
 

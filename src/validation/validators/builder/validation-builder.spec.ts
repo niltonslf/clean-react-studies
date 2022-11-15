@@ -1,3 +1,5 @@
+import { expect, describe, test } from 'vitest'
+
 import {
   ValidationBuilder as sut,
   RequiredFieldValidation,

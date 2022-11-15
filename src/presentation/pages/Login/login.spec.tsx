@@ -1,12 +1,13 @@
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
+import { expect, describe, test, vi } from 'vitest'
 
 import { InvalidCredentialsError } from '@/domain/errors'
 import { AuthenticationSpy, ValidationSpy } from '@/presentation/test'
 import { faker } from '@faker-js/faker'
 import { act, cleanup, fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
 
-import 'jest-localstorage-mock'
+import 'vitest-localstorage-mock'
 
 import Login from './index'
 
@@ -129,7 +130,7 @@ describe('Login Component', () => {
     const { sut, authenticationSpy } = makeSut()
 
     const error = new InvalidCredentialsError()
-    jest.spyOn(authenticationSpy, 'auth').mockReturnValue(Promise.reject(error))
+    vi.spyOn(authenticationSpy, 'auth').mockReturnValue(Promise.reject(error))
 
     const errorWrap = sut.getByTestId('error-wrap')
 
