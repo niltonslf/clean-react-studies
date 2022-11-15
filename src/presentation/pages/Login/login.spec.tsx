@@ -1,15 +1,14 @@
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
-import { expect, describe, test, vi } from 'vitest'
+import { expect, describe, test, vi, afterEach, beforeEach } from 'vitest'
 
 import { InvalidCredentialsError } from '@/domain/errors'
+import { Login } from '@/presentation/pages'
 import { AuthenticationSpy, ValidationSpy } from '@/presentation/test'
 import { faker } from '@faker-js/faker'
 import { act, cleanup, fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
 
 import 'vitest-localstorage-mock'
-
-import Login from './index'
 
 type SutTypes = {
   sut: RenderResult
