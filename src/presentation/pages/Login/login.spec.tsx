@@ -131,16 +131,17 @@ describe('Login Component', () => {
     const error = new InvalidCredentialsError()
     jest.spyOn(authenticationSpy, 'auth').mockReturnValue(Promise.reject(error))
 
+    const errorWrap = sut.getByTestId('error-wrap')
+
     act(() => {
       simulateValidSubmit(sut)
     })
-    const errorWrap = sut.getByTestId('error-wrap')
 
     setTimeout(() => {
       const mainError = sut.getByTestId('main-error')
       expect(mainError.textContent).toBe(error.message)
-      expect(errorWrap.childElementCount).toBe(1)
-    }, 5000)
+      expect(errorWrap.childElementCount).toBe(2)
+    }, 2000)
   })
 
   test('should add token to localStorage on success', async () => {
