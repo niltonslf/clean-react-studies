@@ -1,13 +1,21 @@
-import axios, { AxiosResponse } from 'axios'
+import axios, { AxiosInstance, AxiosResponse } from 'axios'
 
 import { HttpPostClient, HttpPostParams, HttpResponse } from '@/data/protocols/http'
 
 export class AxiosHttpClient implements HttpPostClient<any, any> {
+  private readonly axiosInstance: AxiosInstance
+
+  constructor() {
+    this.axiosInstance = axios.create({
+      baseURL: import.meta.env.VITE_API_URL,
+    })
+  }
+
   async post(params: HttpPostParams<any>): Promise<HttpResponse<any>> {
     let response: AxiosResponse<any>
 
     try {
-      response = await axios.post(params.url, params.body)
+      response = await this.axiosInstance.post(params.url, params.body)
     } catch (error: any) {
       response = error.response
     }
