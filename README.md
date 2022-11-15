@@ -8,7 +8,9 @@
 ├──── usecases
 ├── infra
 ├── presentation
+├── main
 └── validation
+
 ```
 
 ## Infra
@@ -33,3 +35,8 @@
 ## validation
 
 - camada de validação de formulário
+
+## main
+
+- camada responsável por chamar todas as outras camadas
+- depende de todas as camadas
