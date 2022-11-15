@@ -10,7 +10,6 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['vitest-localstorage-mock'],
     mockReset: false,
-    watch: false,
   },
   resolve: {
     alias: {
