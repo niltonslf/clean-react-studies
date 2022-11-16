@@ -23,7 +23,7 @@ jobs:
           paths: .
 
 workflows:
-  deploy:
+  test_my_app:
     jobs:
       - build_and_test
       - deploy:
