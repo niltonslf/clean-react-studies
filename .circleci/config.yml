@@ -18,12 +18,12 @@ jobs:
       - run:
           command: yarn build
           name: Build app
+      - store_test_results:
+          path: test-results
       - persist_to_workspace:
           root: ~/project
           paths:
             - .
-      - store_test_results:
-          path: test-results
 
 
   # deploy: # this can be any name you choose
