@@ -1,7 +1,24 @@
-language: node_js
-node_js:
-  - 12
-script:
-  - eslint 'src/**'
-  - yarn test:ci
+version: 2.1
+orbs:
+  node: circleci/node@5.0.2
+jobs:
+  build_and_test: # this can be any name you choose
+    executor: node/default # use the default executor defined within the orb
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          command: eslint 'src/**'
+          name: run eslint
+      - run:
+          command: yarn test:ci
+          name: Run tests
+      - run:
+          command: yarn build
+          name: Build app
+      - persist_to_workspace:
+          root: ~/project
+          paths: .
+
    
