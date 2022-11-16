@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.2
-
+  
 jobs:
   build_and_test:
     executor: node/default
@@ -22,7 +22,9 @@ jobs:
           root: ~/project
           paths:
             - .
-            - .
+      - store_test_results:
+          path: test-results
+
 
   # deploy: # this can be any name you choose
   #   executor: heroku/default
