@@ -25,6 +25,7 @@
     "@typescript-eslint/space-before-function-paren": "off",
     "jsx-quotes": ["error", "prefer-single"],
     "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/no-misused-promises": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "indent": "off",
     // "@typescript-eslint/indent": [2],
