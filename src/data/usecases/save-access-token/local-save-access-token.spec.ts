@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
 
 import { SetStorageMock } from '@/data/test/mock-storage'
 import { faker } from '@faker-js/faker'
@@ -18,12 +18,21 @@ const makeSut = (): SutTypes => {
 }
 
 describe('LocalSaveAccessToken', () => {
-  test('should save access token', () => {
+  test('should call SetStorage with correct value', () => {
     const { sut, setStorageMock } = makeSut()
     const accessToken = faker.datatype.uuid()
     sut.save(accessToken)
 
     expect(setStorageMock.key).toBe('accessToken')
     expect(setStorageMock.value).toBe(accessToken)
+  })
+
+  test('should throw error if SetStorage throws', async () => {
+    const { sut, setStorageMock } = makeSut()
+    vi.spyOn(setStorageMock, 'set').mockRejectedValueOnce(new Error())
+
+    const promise = sut.save(faker.datatype.uuid())
+
+    await expect(promise).rejects.toThrow(new Error())
   })
 })
