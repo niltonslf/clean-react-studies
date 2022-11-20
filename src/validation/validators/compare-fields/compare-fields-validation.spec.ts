@@ -15,4 +15,13 @@ describe('CompareFieldValidation', () => {
 
     expect(error).toEqual(new CompareFieldError())
   })
+
+  test('should return success if compare is valid ', () => {
+    const value = faker.random.words()
+
+    const sut = makeSut(value)
+    const error = sut.validate(value)
+
+    expect(error).toBeFalsy()
+  })
 })
