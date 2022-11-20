@@ -9,7 +9,7 @@ export class RemoteAddAccount implements AddAccount {
     private readonly httpPostClient: HttpPostClient<AddAccountParams, AccountModel>
   ) {}
 
-  async add(params: AddAccountParams): Promise<void> {
+  async add(params: AddAccountParams): Promise<AccountModel | null> {
     const httpResponse = await this.httpPostClient.post({
       url: this.url,
       body: params,
@@ -17,7 +17,7 @@ export class RemoteAddAccount implements AddAccount {
 
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
-        break
+        return httpResponse.body ?? null
       case HttpStatusCode.forbidden: {
         throw new EmailInUseError()
       }
