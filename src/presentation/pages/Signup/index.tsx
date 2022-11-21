@@ -1,16 +1,17 @@
 import './signup.styles.scss'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Input, Submit, FormStatus } from '@/presentation/components'
 import { FormContext } from '@/presentation/components/Form/context'
+import { Validation } from '@/presentation/protocols/validation'
 
 interface LoginProps {
-  any?: any
+  validation: Validation
 }
 
-const SignUp: React.FC<LoginProps> = () => {
+const SignUp: React.FC<LoginProps> = ({ validation }) => {
   const [state, setState] = useState({
     isLoading: false,
     mainError: '',
@@ -23,6 +24,13 @@ const SignUp: React.FC<LoginProps> = () => {
     passwordError: '',
     passwordConfirmationError: '',
   })
+
+  useEffect(() => {
+    setState((state) => ({
+      ...state,
+      nameError: validation.validate('name', state.name) ?? '',
+    }))
+  }, [state.name])
 
   return (
     <section className='container'>
