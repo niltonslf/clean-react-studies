@@ -53,37 +53,53 @@ describe('SignUp Component', () => {
 
   test('should show Name error if validation fails', () => {
     const validationError = faker.random.words()
-
     const { sut } = makeSut({ validationError })
-
     Helper.populateField(sut, 'name')
     testChildCount(sut, 'name-group', 2)
   })
 
   test('should show Email error if validation fails', () => {
     const validationError = faker.random.words()
-
     const { sut } = makeSut({ validationError })
-
     Helper.populateField(sut, 'email')
     testChildCount(sut, 'email-group', 2)
   })
 
   test('should show password error if validation fails', () => {
     const validationError = faker.random.words()
-
     const { sut } = makeSut({ validationError })
-
     Helper.populateField(sut, 'password')
     testChildCount(sut, 'password-group', 2)
   })
 
   test('should show passwordConfirmation error if validation fails', () => {
     const validationError = faker.random.words()
-
     const { sut } = makeSut({ validationError })
-
     Helper.populateField(sut, 'passwordConfirmation')
     testChildCount(sut, 'password-confirmation-group', 2)
+  })
+
+  test('should valid name state if validation succeeds', () => {
+    const { sut } = makeSut()
+    Helper.populateField(sut, 'name')
+    testChildCount(sut, 'name-group', 1)
+  })
+
+  test('should valid email state if validation succeeds', () => {
+    const { sut } = makeSut()
+    Helper.populateField(sut, 'email')
+    testChildCount(sut, 'email-group', 1)
+  })
+
+  test('should valid password state if validation succeeds', () => {
+    const { sut } = makeSut()
+    Helper.populateField(sut, 'password')
+    testChildCount(sut, 'password-group', 1)
+  })
+
+  test('should valid name state if validation succeeds', () => {
+    const { sut } = makeSut()
+    Helper.populateField(sut, 'passwordConfirmation')
+    testChildCount(sut, 'password-confirmation-group', 1)
   })
 })
