@@ -1,6 +1,7 @@
 import { expect } from 'vitest'
 
-import { RenderResult } from '@testing-library/react'
+import { faker } from '@faker-js/faker'
+import { fireEvent, RenderResult } from '@testing-library/react'
 
 export const testChildCount = (sut: RenderResult, field: string, count: number) => {
   const element = sut.getByTestId(field)
@@ -15,4 +16,9 @@ export const testButtonIsDisabled = (sut: RenderResult, field: string, isDisable
 export const testFieldIsEmpty = (sut: RenderResult, field: string) => {
   const element = sut.getByTestId(field) as HTMLInputElement
   expect(element.value).toBe('')
+}
+
+export const populateField = (sut: RenderResult, field: string, value = faker.random.word()) => {
+  const input = sut.getByTestId(field) as HTMLInputElement
+  fireEvent.input(input, { target: { value } })
 }
