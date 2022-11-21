@@ -43,7 +43,7 @@ describe('SignUp Component', () => {
     Helper.testFieldIsEmpty(sut, 'name')
     Helper.testFieldIsEmpty(sut, 'email')
     Helper.testFieldIsEmpty(sut, 'password')
-    Helper.testFieldIsEmpty(sut, 'password-confirmation')
+    Helper.testFieldIsEmpty(sut, 'passwordConfirmation')
 
     Helper.testChildCount(sut, 'name-group', 1)
     Helper.testChildCount(sut, 'email-group', 1)
@@ -58,5 +58,32 @@ describe('SignUp Component', () => {
 
     Helper.populateField(sut, 'name')
     testChildCount(sut, 'name-group', 2)
+  })
+
+  test('should show Email error if validation fails', () => {
+    const validationError = faker.random.words()
+
+    const { sut } = makeSut({ validationError })
+
+    Helper.populateField(sut, 'email')
+    testChildCount(sut, 'email-group', 2)
+  })
+
+  test('should show password error if validation fails', () => {
+    const validationError = faker.random.words()
+
+    const { sut } = makeSut({ validationError })
+
+    Helper.populateField(sut, 'password')
+    testChildCount(sut, 'password-group', 2)
+  })
+
+  test('should show passwordConfirmation error if validation fails', () => {
+    const validationError = faker.random.words()
+
+    const { sut } = makeSut({ validationError })
+
+    Helper.populateField(sut, 'passwordConfirmation')
+    testChildCount(sut, 'password-confirmation-group', 2)
   })
 })
