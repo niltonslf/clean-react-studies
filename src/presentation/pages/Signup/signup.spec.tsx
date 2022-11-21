@@ -1,8 +1,9 @@
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
-import { describe, expect, test } from 'vitest'
+import { describe, test } from 'vitest'
 
 import { SignUp } from '@/presentation/pages'
+import { Helper } from '@/presentation/test/'
 import { render, RenderResult } from '@testing-library/react'
 
 type SutTypes = {
@@ -21,36 +22,21 @@ const makeSut = (): SutTypes => {
   return { sut }
 }
 
-const testChildCount = (sut: RenderResult, field: string, count: number) => {
-  const element = sut.getByTestId(field)
-  expect(element.childElementCount).toBe(count)
-}
-
-const testButtonIsDisabled = (sut: RenderResult, field: string, isDisabled: boolean) => {
-  const button = sut.getByTestId(field) as HTMLButtonElement
-  expect(button.disabled).toBe(isDisabled)
-}
-
-const testFieldIsEmpty = (sut: RenderResult, field: string) => {
-  const element = sut.getByTestId(field) as HTMLInputElement
-  expect(element.value).toBe('')
-}
-
 describe('SignUp Component', () => {
   test('Should start with initial state', () => {
     const { sut } = makeSut()
 
-    testChildCount(sut, 'error-wrap', 0)
-    testButtonIsDisabled(sut, 'submit', true)
+    Helper.testChildCount(sut, 'error-wrap', 0)
+    Helper.testButtonIsDisabled(sut, 'submit', true)
 
-    testFieldIsEmpty(sut, 'name')
-    testFieldIsEmpty(sut, 'email')
-    testFieldIsEmpty(sut, 'password')
-    testFieldIsEmpty(sut, 'password-confirmation')
+    Helper.testFieldIsEmpty(sut, 'name')
+    Helper.testFieldIsEmpty(sut, 'email')
+    Helper.testFieldIsEmpty(sut, 'password')
+    Helper.testFieldIsEmpty(sut, 'password-confirmation')
 
-    testChildCount(sut, 'name-group', 1)
-    testChildCount(sut, 'email-group', 1)
-    testChildCount(sut, 'password-group', 1)
-    testChildCount(sut, 'password-confirmation-group', 1)
+    Helper.testChildCount(sut, 'name-group', 1)
+    Helper.testChildCount(sut, 'email-group', 1)
+    Helper.testChildCount(sut, 'password-group', 1)
+    Helper.testChildCount(sut, 'password-confirmation-group', 1)
   })
 })
