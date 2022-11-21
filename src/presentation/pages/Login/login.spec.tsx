@@ -4,7 +4,7 @@ import { expect, describe, test, vi, afterEach } from 'vitest'
 
 import { InvalidCredentialsError } from '@/domain/errors'
 import { Login } from '@/presentation/pages'
-import { AuthenticationSpy, ValidationSpy } from '@/presentation/test'
+import { AuthenticationSpy, Helper, ValidationSpy } from '@/presentation/test'
 import { SaveAccessTokenMock } from '@/presentation/test/save-access-token-mock'
 import { faker } from '@faker-js/faker'
 import { act, cleanup, fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
@@ -41,11 +41,8 @@ const simulateValidSubmit = (
   email = faker.internet.email(),
   password = faker.internet.password()
 ) => {
-  const emailInput = sut.getByTestId('email')
-  fireEvent.input(emailInput, { target: { value: email } })
-
-  const passwordInput = sut.getByTestId('password')
-  fireEvent.input(passwordInput, { target: { value: password } })
+  Helper.populateField(sut, 'email', email)
+  Helper.populateField(sut, 'password', password)
 
   const submitButton = sut.getByTestId('submit') as HTMLButtonElement
   fireEvent.click(submitButton)
@@ -75,11 +72,8 @@ describe('Login Component', () => {
     const { sut, validationSpy } = makeSut()
     const passwordFaker = faker.internet.password()
 
-    const passwordInput = sut.getByTestId('password')
-    const emailInput = sut.getByTestId('email')
-
-    fireEvent.input(passwordInput, { target: { value: passwordFaker } })
-    fireEvent.input(emailInput, { target: { value: passwordFaker } })
+    Helper.populateField(sut, 'password', passwordFaker)
+    Helper.populateField(sut, 'email', passwordFaker)
 
     const errorMessage = faker.random.words()
     validationSpy.errorMessage = errorMessage
@@ -90,12 +84,10 @@ describe('Login Component', () => {
 
   test('should enable submit button when type email and password', () => {
     const { sut } = makeSut()
-    const passwordInput = sut.getByTestId('password')
-    const emailInput = sut.getByTestId('email')
     const submitButton = sut.getByTestId('submit') as HTMLButtonElement
 
-    fireEvent.input(emailInput, { target: { value: faker.internet.email() } })
-    fireEvent.input(passwordInput, { target: { value: faker.internet.password() } })
+    Helper.populateField(sut, 'email', faker.internet.email())
+    Helper.populateField(sut, 'password', faker.internet.password())
 
     expect(submitButton.disabled).toBe(false)
   })
