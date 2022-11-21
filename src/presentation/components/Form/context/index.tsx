@@ -10,7 +10,7 @@ export type StateProps = {
 }
 
 export interface FormContextProps {
-  state: StateProps
+  state: any
   setState: (value: any) => void
 }
 
