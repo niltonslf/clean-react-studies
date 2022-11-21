@@ -29,6 +29,9 @@ const SignUp: React.FC<LoginProps> = ({ validation }) => {
     setState((state) => ({
       ...state,
       nameError: validation.validate('name', state.name) ?? '',
+      emailError: validation.validate('email', state.name) ?? '',
+      passwordError: validation.validate('password', state.name) ?? '',
+      passwordConfirmationError: validation.validate('passwordConfirmation', state.name) ?? '',
     }))
   }, [state.name])
 
@@ -50,10 +53,8 @@ const SignUp: React.FC<LoginProps> = ({ validation }) => {
                 name='name'
                 placeholder='Type your name'
               />
-              {!state.isLoading && state.name && (
-                <div data-testid='field-name-error' className='form-error'>
-                  {state.name}
-                </div>
+              {!state.isLoading && state.nameError && (
+                <div className='form-error'>{state.nameError}</div>
               )}
             </div>
 
@@ -65,10 +66,8 @@ const SignUp: React.FC<LoginProps> = ({ validation }) => {
                 name='email'
                 placeholder='Type your mail'
               />
-              {!state.isLoading && state.email && (
-                <div data-testid='field-email-error' className='form-error'>
-                  {state.email}
-                </div>
+              {!state.isLoading && state.emailError && (
+                <div className='form-error'>{state.emailError}</div>
               )}
             </div>
 
@@ -80,25 +79,21 @@ const SignUp: React.FC<LoginProps> = ({ validation }) => {
                 type='password'
                 placeholder='Type your password'
               />
-              {!state.isLoading && state.password && (
-                <div data-testid='field-password-error' className='form-error'>
-                  {state.password}
-                </div>
+              {!state.isLoading && state.passwordError && (
+                <div className='form-error'>{state.passwordError}</div>
               )}
             </div>
 
             <div className='form-group' data-testid='password-confirmation-group'>
               <Input
-                data-testid='password-confirmation'
-                name='password-confirmation'
+                data-testid='passwordConfirmation'
+                name='passwordConfirmation'
                 required
                 type='password'
                 placeholder='Confirme your password'
               />
-              {!state.isLoading && state.passwordConfirmation && (
-                <div data-testid='field-password-confirmation-error' className='form-error'>
-                  {state.passwordConfirmation}
-                </div>
+              {!state.isLoading && state.passwordConfirmationError && (
+                <div className='form-error'>{state.passwordConfirmationError}</div>
               )}
             </div>
 
