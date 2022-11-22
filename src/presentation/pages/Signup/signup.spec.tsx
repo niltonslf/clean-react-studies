@@ -203,6 +203,18 @@ describe('SignUp Component', () => {
     expect(history.location.pathname).toBe('/')
   })
 
+  test('should call SaveLocalAccessToken on fail', async () => {
+    const { sut, saveAccessTokenMock } = makeSut()
+    const error = new EmailInUseError()
+
+    vi.spyOn(saveAccessTokenMock, 'save').mockRejectedValueOnce(error)
+
+    await act(async () => await simulateValidSubmit(sut))
+
+    Helper.testElementText(sut, 'main-error', error.message)
+    Helper.testChildCount(sut, 'error-wrap', 1)
+  })
+
   test('should go back to login page', () => {
     const { sut } = makeSut()
     const register = sut.getByTestId('login-link')
