@@ -1,12 +1,13 @@
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
-import { afterEach, describe, expect, test } from 'vitest'
+import { afterEach, describe, expect, test, vi } from 'vitest'
 
+import { EmailInUseError } from '@/domain/errors'
 import { SignUp } from '@/presentation/pages'
 import { AddAccountSpy, Helper, ValidationSpy } from '@/presentation/test/'
 import { testChildCount } from '@/presentation/test/form-helper'
 import { faker } from '@faker-js/faker'
-import { cleanup, fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
 
 type SutTypes = {
   sut: RenderResult
@@ -171,5 +172,17 @@ describe('SignUp Component', () => {
 
     await simulateValidSubmit(sut)
     expect(addAccountSpy.callsCount).toBe(0)
+  })
+
+  test('should present error if AddAccount fails', async () => {
+    const { sut, addAccountSpy } = makeSut()
+    const error = new EmailInUseError()
+
+    vi.spyOn(addAccountSpy, 'add').mockRejectedValueOnce(error)
+
+    await act(async () => await simulateValidSubmit(sut))
+
+    Helper.testElementText(sut, 'main-error', error.message)
+    Helper.testChildCount(sut, 'error-wrap', 1)
   })
 })
