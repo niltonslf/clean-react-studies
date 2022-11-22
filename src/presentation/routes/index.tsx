@@ -1,17 +1,16 @@
 import { Routes as Router, Route, BrowserRouter } from 'react-router-dom'
 
-import { SignUp } from '@/presentation/pages'
-
 interface AppProps {
   LoginFactory: React.FC
+  SignUpFactory: React.FC
 }
 
-const Routes: React.FC<AppProps> = ({ LoginFactory }) => {
+const Routes: React.FC<AppProps> = ({ LoginFactory, SignUpFactory }) => {
   return (
     <BrowserRouter>
       <Router>
         <Route path='/login' element={<LoginFactory />} />
-        <Route path='/signup' element={<SignUp />} />
+        <Route path='/signup' element={<SignUpFactory />} />
       </Router>
     </BrowserRouter>
   )
