@@ -29,6 +29,11 @@ const SignUp: React.FC<LoginProps> = ({ validation }) => {
     return !state.email && !state.password && !state.passwordConfirmation && !state.name
   }
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    event.preventDefault()
+    setState((state) => ({ ...state, isLoading: true }))
+  }
+
   useEffect(() => {
     setState((state) => ({
       ...state,
@@ -48,7 +53,7 @@ const SignUp: React.FC<LoginProps> = ({ validation }) => {
         </header>
 
         <FormContext.Provider value={{ state, setState }}>
-          <form className='login-form'>
+          <form className='login-form' onSubmit={handleSubmit}>
             <div className='form-group' data-testid='name-group'>
               <Input
                 data-testid='name'
