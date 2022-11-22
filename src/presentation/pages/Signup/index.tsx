@@ -1,9 +1,9 @@
 import './signup.styles.scss'
 
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
-import { AddAccount } from '@/domain/usecases'
+import { AddAccount, SaveAccessToken } from '@/domain/usecases'
 import { Input, Submit, FormStatus } from '@/presentation/components'
 import { FormContext } from '@/presentation/components/Form/context'
 import { Validation } from '@/presentation/protocols/validation'
@@ -11,9 +11,12 @@ import { Validation } from '@/presentation/protocols/validation'
 interface LoginProps {
   validation: Validation
   addAccount: AddAccount
+  saveAccessToken: SaveAccessToken
 }
 
-const SignUp: React.FC<LoginProps> = ({ validation, addAccount }) => {
+const SignUp: React.FC<LoginProps> = ({ validation, addAccount, saveAccessToken }) => {
+  const navigate = useNavigate()
+
   const [state, setState] = useState({
     isLoading: false,
     requestError: '',
@@ -40,12 +43,15 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount }) => {
         return
 
       setState((state) => ({ ...state, isLoading: true }))
-      await addAccount.add({
+      const account = await addAccount.add({
         email: state.email,
         name: state.name,
         password: state.password,
         passwordConfirmation: state.passwordConfirmation,
       })
+
+      if (account?.accessToken) await saveAccessToken.save(account?.accessToken)
+      navigate('/')
     } catch (error: any) {
       setState((state) => ({ ...state, isLoading: false, requestError: error.message }))
     }
@@ -70,7 +76,7 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount }) => {
         </header>
 
         <FormContext.Provider value={{ state, setState }}>
-          <form className='login-form' onSubmit={handleSubmit}>
+          <form data-testid='form' className='login-form' onSubmit={handleSubmit}>
             <div className='form-group' data-testid='name-group'>
               <Input
                 data-testid='name'
