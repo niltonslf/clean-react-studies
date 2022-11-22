@@ -25,6 +25,10 @@ const SignUp: React.FC<LoginProps> = ({ validation }) => {
     passwordConfirmationError: '',
   })
 
+  const handleDisabled = (): boolean => {
+    return !state.email && !state.password && !state.passwordConfirmation && !state.name
+  }
+
   useEffect(() => {
     setState((state) => ({
       ...state,
@@ -97,7 +101,9 @@ const SignUp: React.FC<LoginProps> = ({ validation }) => {
               )}
             </div>
 
-            <Submit data-testid='submit'>Login</Submit>
+            <Submit disabled={handleDisabled()} data-testid='submit'>
+              Login
+            </Submit>
             <Link to='/login' className='back-to-login'>
               Voltar para login
             </Link>
