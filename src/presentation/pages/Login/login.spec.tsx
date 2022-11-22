@@ -128,13 +128,10 @@ describe('Login Component', () => {
     const error = new InvalidCredentialsError()
     vi.spyOn(authenticationSpy, 'auth').mockReturnValue(Promise.reject(error))
 
-    const errorWrap = sut.getByTestId('error-wrap')
-
     await act(async () => simulateValidSubmit(sut))
 
-    const mainError = sut.getByTestId('main-error')
-    expect(mainError.textContent).toBe(error.message)
-    expect(errorWrap.childElementCount).toBe(1)
+    Helper.testElementText(sut, 'main-error', error.message)
+    Helper.testChildCount(sut, 'error-wrap', 1)
   })
 
   test('should call SaveLocalAccessToken on sucess', async () => {
