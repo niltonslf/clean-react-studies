@@ -16,7 +16,7 @@ interface LoginProps {
 const SignUp: React.FC<LoginProps> = ({ validation, addAccount }) => {
   const [state, setState] = useState({
     isLoading: false,
-    mainError: '',
+    requestError: '',
     name: '',
     email: '',
     password: '',
@@ -35,16 +35,20 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount }) => {
     event.preventDefault()
     const { nameError, emailError, passwordConfirmationError, passwordError } = state
 
-    if (state.isLoading || nameError || emailError || passwordConfirmationError || passwordError)
-      return
+    try {
+      if (state.isLoading || nameError || emailError || passwordConfirmationError || passwordError)
+        return
 
-    setState((state) => ({ ...state, isLoading: true }))
-    await addAccount.add({
-      email: state.email,
-      name: state.name,
-      password: state.password,
-      passwordConfirmation: state.passwordConfirmation,
-    })
+      setState((state) => ({ ...state, isLoading: true }))
+      await addAccount.add({
+        email: state.email,
+        name: state.name,
+        password: state.password,
+        passwordConfirmation: state.passwordConfirmation,
+      })
+    } catch (error: any) {
+      setState((state) => ({ ...state, isLoading: false, requestError: error.message }))
+    }
   }
 
   useEffect(() => {
