@@ -132,7 +132,7 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount, saveAccessToken 
             <Submit disabled={handleDisabled()} data-testid='submit'>
               Login
             </Submit>
-            <Link to='/login' className='back-to-login'>
+            <Link to='/login' data-testid='login-link' className='back-to-login'>
               Voltar para login
             </Link>
             <FormStatus />
