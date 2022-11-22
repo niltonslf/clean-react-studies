@@ -6,12 +6,14 @@ import { EmailInUseError } from '@/domain/errors'
 import { SignUp } from '@/presentation/pages'
 import { AddAccountSpy, Helper, ValidationSpy } from '@/presentation/test/'
 import { testChildCount } from '@/presentation/test/form-helper'
+import { SaveAccessTokenMock } from '@/presentation/test/save-access-token-mock'
 import { faker } from '@faker-js/faker'
 import { act, cleanup, fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
 
 type SutTypes = {
   sut: RenderResult
   addAccountSpy: AddAccountSpy
+  saveAccessTokenMock: SaveAccessTokenMock
 }
 
 type SutParams = {
@@ -25,14 +27,19 @@ const makeSut = (params?: SutParams): SutTypes => {
   validationStub.errorMessage = params?.validationError ?? ''
 
   const addAccountSpy = new AddAccountSpy()
+  const saveAccessTokenMock = new SaveAccessTokenMock()
 
   const sut = render(
     <Router location={history.location} navigator={history}>
-      <SignUp validation={validationStub} addAccount={addAccountSpy} />
+      <SignUp
+        validation={validationStub}
+        addAccount={addAccountSpy}
+        saveAccessToken={saveAccessTokenMock}
+      />
     </Router>
   )
 
-  return { sut, addAccountSpy }
+  return { sut, addAccountSpy, saveAccessTokenMock }
 }
 
 const simulateValidSubmit = async (
@@ -184,5 +191,15 @@ describe('SignUp Component', () => {
 
     Helper.testElementText(sut, 'main-error', error.message)
     Helper.testChildCount(sut, 'error-wrap', 1)
+  })
+
+  test('should call SaveLocalAccessToken on success', async () => {
+    const { sut, addAccountSpy, saveAccessTokenMock } = makeSut()
+
+    await act(async () => await simulateValidSubmit(sut))
+    await waitFor(() => sut.getByTestId('form'))
+
+    expect(saveAccessTokenMock.accessToken).toBe(addAccountSpy.account.accessToken)
+    expect(history.location.pathname).toBe('/')
   })
 })
