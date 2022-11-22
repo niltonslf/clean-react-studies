@@ -3,15 +3,17 @@ import './signup.styles.scss'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
+import { AddAccount } from '@/domain/usecases'
 import { Input, Submit, FormStatus } from '@/presentation/components'
 import { FormContext } from '@/presentation/components/Form/context'
 import { Validation } from '@/presentation/protocols/validation'
 
 interface LoginProps {
   validation: Validation
+  addAccount: AddAccount
 }
 
-const SignUp: React.FC<LoginProps> = ({ validation }) => {
+const SignUp: React.FC<LoginProps> = ({ validation, addAccount }) => {
   const [state, setState] = useState({
     isLoading: false,
     mainError: '',
@@ -31,7 +33,14 @@ const SignUp: React.FC<LoginProps> = ({ validation }) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
+
     setState((state) => ({ ...state, isLoading: true }))
+    await addAccount.add({
+      email: state.email,
+      name: state.name,
+      password: state.password,
+      passwordConfirmation: state.passwordConfirmation,
+    })
   }
 
   useEffect(() => {
