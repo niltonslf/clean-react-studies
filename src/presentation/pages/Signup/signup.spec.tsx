@@ -1,12 +1,12 @@
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
-import { afterEach, describe, expect, test } from 'vitest'
+import { afterEach, describe, test } from 'vitest'
 
 import { SignUp } from '@/presentation/pages'
 import { Helper, ValidationSpy } from '@/presentation/test/'
 import { testChildCount } from '@/presentation/test/form-helper'
 import { faker } from '@faker-js/faker'
-import { cleanup, render, RenderResult } from '@testing-library/react'
+import { cleanup, fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
 
 type SutTypes = {
   sut: RenderResult
@@ -29,6 +29,22 @@ const makeSut = (params?: SutParams): SutTypes => {
   )
 
   return { sut }
+}
+
+const simulateValidSubmit = async (
+  sut: RenderResult,
+  name = faker.name.fullName(),
+  email = faker.internet.email(),
+  password = faker.internet.password()
+) => {
+  Helper.populateField(sut, 'name', name)
+  Helper.populateField(sut, 'email', email)
+  Helper.populateField(sut, 'password', password)
+  Helper.populateField(sut, 'passwordConfirmation', password)
+
+  const submitButton = sut.getByTestId('submit') as HTMLButtonElement
+  fireEvent.click(submitButton)
+  await waitFor(() => submitButton)
 }
 
 describe('SignUp Component', () => {
@@ -105,7 +121,6 @@ describe('SignUp Component', () => {
 
   test('should enable submit button if form is valid', () => {
     const { sut } = makeSut()
-    const submitButton = sut.getByTestId('submit') as HTMLButtonElement
 
     const password = faker.internet.password()
 
@@ -114,6 +129,12 @@ describe('SignUp Component', () => {
     Helper.populateField(sut, 'password', password)
     Helper.populateField(sut, 'passwordConfirmation', password)
 
-    expect(submitButton.disabled).toBe(false)
+    Helper.testButtonIsDisabled(sut, 'submit', false)
+  })
+  test('should show spinner on submit', async () => {
+    const { sut } = makeSut()
+    await simulateValidSubmit(sut)
+
+    Helper.testElementExists(sut, 'loader')
   })
 })
