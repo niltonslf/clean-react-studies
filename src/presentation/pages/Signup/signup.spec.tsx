@@ -164,4 +164,12 @@ describe('SignUp Component', () => {
 
     expect(addAccountSpy.callsCount).toBe(1)
   })
+
+  test('should present error if Authentication fails', async () => {
+    const validationError = faker.random.words()
+    const { sut, addAccountSpy } = makeSut({ validationError })
+
+    await simulateValidSubmit(sut)
+    expect(addAccountSpy.callsCount).toBe(0)
+  })
 })
