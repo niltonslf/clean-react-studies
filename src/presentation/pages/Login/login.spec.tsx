@@ -130,15 +130,11 @@ describe('Login Component', () => {
 
     const errorWrap = sut.getByTestId('error-wrap')
 
-    act(() => {
-      simulateValidSubmit(sut)
-    })
+    await act(async () => simulateValidSubmit(sut))
 
-    setTimeout(() => {
-      const mainError = sut.getByTestId('main-error')
-      expect(mainError.textContent).toBe(error.message)
-      expect(errorWrap.childElementCount).toBe(2)
-    }, 2000)
+    const mainError = sut.getByTestId('main-error')
+    expect(mainError.textContent).toBe(error.message)
+    expect(errorWrap.childElementCount).toBe(1)
   })
 
   test('should call SaveLocalAccessToken on sucess', async () => {
