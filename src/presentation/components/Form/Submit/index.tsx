@@ -1,16 +1,9 @@
-import { useContext } from 'react'
-
-import { FormContext, FormContextProps } from '../context'
 import '../form-styles.scss'
 
 type ReactButton = React.ButtonHTMLAttributes<HTMLButtonElement>
 type InputProps = React.DetailedHTMLProps<ReactButton, HTMLButtonElement>
 
-const Submit: React.FC<InputProps> = ({ children, ...props }) => {
-  const { state } = useContext(FormContext) as FormContextProps
-
-  const disabled = !state.email && !state.password
-
+const Submit: React.FC<InputProps> = ({ children, disabled = true, ...props }) => {
   return (
     <button
       disabled={disabled}
