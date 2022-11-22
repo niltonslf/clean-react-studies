@@ -1,6 +1,6 @@
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
-import { afterEach, describe, test } from 'vitest'
+import { afterEach, describe, expect, test } from 'vitest'
 
 import { SignUp } from '@/presentation/pages'
 import { Helper, ValidationSpy } from '@/presentation/test/'
@@ -101,5 +101,19 @@ describe('SignUp Component', () => {
     const { sut } = makeSut()
     Helper.populateField(sut, 'passwordConfirmation')
     testChildCount(sut, 'password-confirmation-group', 1)
+  })
+
+  test('should enable submit button if form is valid', () => {
+    const { sut } = makeSut()
+    const submitButton = sut.getByTestId('submit') as HTMLButtonElement
+
+    const password = faker.internet.password()
+
+    Helper.populateField(sut, 'name', faker.name.fullName())
+    Helper.populateField(sut, 'email', faker.internet.email())
+    Helper.populateField(sut, 'password', password)
+    Helper.populateField(sut, 'passwordConfirmation', password)
+
+    expect(submitButton.disabled).toBe(false)
   })
 })
