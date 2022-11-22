@@ -61,9 +61,10 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount, saveAccessToken 
     setState((state) => ({
       ...state,
       nameError: validation.validate('name', state.name) ?? '',
-      emailError: validation.validate('email', state.name) ?? '',
-      passwordError: validation.validate('password', state.name) ?? '',
-      passwordConfirmationError: validation.validate('passwordConfirmation', state.name) ?? '',
+      emailError: validation.validate('email', state.email) ?? '',
+      passwordError: validation.validate('password', state.password) ?? '',
+      passwordConfirmationError:
+        validation.validate('passwordConfirmation', state.passwordConfirmation) ?? '',
     }))
   }, [state.name])
 
@@ -78,26 +79,14 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount, saveAccessToken 
         <FormContext.Provider value={{ state, setState }}>
           <form data-testid='form' className='login-form' onSubmit={handleSubmit}>
             <div className='form-group' data-testid='name-group'>
-              <Input
-                data-testid='name'
-                required
-                type='name'
-                name='name'
-                placeholder='Type your name'
-              />
+              <Input data-testid='name' type='name' name='name' placeholder='Type your name' />
               {!state.isLoading && state.nameError && (
                 <div className='form-error'>{state.nameError}</div>
               )}
             </div>
 
             <div className='form-group' data-testid='email-group'>
-              <Input
-                data-testid='email'
-                required
-                type='email'
-                name='email'
-                placeholder='Type your mail'
-              />
+              <Input data-testid='email' type='email' name='email' placeholder='Type your mail' />
               {!state.isLoading && state.emailError && (
                 <div className='form-error'>{state.emailError}</div>
               )}
@@ -107,7 +96,6 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount, saveAccessToken 
               <Input
                 data-testid='password'
                 name='password'
-                required
                 type='password'
                 placeholder='Type your password'
               />
@@ -120,7 +108,6 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount, saveAccessToken 
               <Input
                 data-testid='passwordConfirmation'
                 name='passwordConfirmation'
-                required
                 type='password'
                 placeholder='Confirme your password'
               />
@@ -130,7 +117,7 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount, saveAccessToken 
             </div>
 
             <Submit disabled={handleDisabled()} data-testid='submit'>
-              Login
+              Register
             </Submit>
             <Link to='/login' data-testid='login-link' className='back-to-login'>
               Voltar para login
