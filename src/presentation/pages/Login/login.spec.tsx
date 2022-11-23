@@ -78,8 +78,8 @@ describe('Login Component', () => {
     const errorMessage = faker.random.words()
     validationSpy.errorMessage = errorMessage
 
-    expect(validationSpy.validate('password', faker.random.words())).toBe(errorMessage)
-    expect(validationSpy.validate('email', faker.random.words())).toBe(errorMessage)
+    expect(validationSpy.validate('password', { field: faker.random.words() })).toBe(errorMessage)
+    expect(validationSpy.validate('email', { field: faker.random.words() })).toBe(errorMessage)
   })
 
   test('should enable submit button when type email and password', () => {

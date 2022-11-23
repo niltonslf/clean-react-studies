@@ -5,6 +5,8 @@ import {
   RequiredFieldValidation,
 } from '@/validation/validators'
 
+import { CompareFieldValidation } from '../compare-fields/compare-fields-validation'
+
 export class ValidationBuilder {
   private constructor(
     private readonly fieldName: string,
@@ -29,6 +31,12 @@ export class ValidationBuilder {
 
   min(length: number): ValidationBuilder {
     this.validations.push(new MinLengthValidation(this.fieldName, length))
+
+    return this
+  }
+
+  sameAs(fieldToCompare: string): ValidationBuilder {
+    this.validations.push(new CompareFieldValidation(this.fieldName, fieldToCompare))
 
     return this
   }
