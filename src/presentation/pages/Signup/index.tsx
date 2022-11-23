@@ -68,7 +68,7 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount, saveAccessToken 
       passwordError: validation.validate('password', formData) ?? '',
       passwordConfirmationError: validation.validate('passwordConfirmation', formData) ?? '',
     }))
-  }, [state.name])
+  }, [state])
 
   return (
     <section className='container'>
