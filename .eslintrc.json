@@ -1,9 +1,5 @@
 {
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
-  },
+  "settings": { "react": { "version": "detect" } },
 
   "extends": [
     "plugin:react/recommended",
@@ -11,7 +7,7 @@
     "plugin:prettier/recommended"
   ],
 
-  "plugins": ["react", "import", "eslint-plugin-import-helpers", "prettier"],
+  "plugins": ["react", "import", "eslint-plugin-import-helpers", "prettier", "cypress"],
 
   "parserOptions": {
     "project": "./tsconfig.json"
@@ -28,7 +24,6 @@
     "@typescript-eslint/no-misused-promises": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "indent": "off",
-    // "@typescript-eslint/indent": [2],
     "no-tabs": "error",
     "@typescript-eslint/no-tabs": "off",
     "react/jsx-uses-react": "off",
@@ -38,27 +33,12 @@
     "react/prop-types": "off",
     "react/display-name": "off",
     "max-len": ["error", { "code": 100, "tabWidth": 2 }],
-    "prettier/prettier": [
-      "error",
-      {
-        "printWidth": 100
-      }
-    ],
+    "prettier/prettier": ["error", { "printWidth": 100 }],
     "@typescript-eslint/naming-convention": [
       "error",
-      {
-        "selector": "classMethod",
-        "format": ["camelCase"]
-      },
-      {
-        "selector": "interface",
-        "format": ["PascalCase"]
-      },
-      {
-        "selector": "variable",
-        "modifiers": ["destructured"],
-        "format": null
-      }
+      { "selector": "classMethod", "format": ["camelCase"] },
+      { "selector": "interface", "format": ["PascalCase"] },
+      { "selector": "variable", "modifiers": ["destructured"], "format": null }
     ],
     "import-helpers/order-imports": [
       "warn",
@@ -67,6 +47,15 @@
         "groups": ["module", "/^@/", ["parent", "sibling", "index"]],
         "alphabetize": { "order": "asc", "ignoreCase": true }
       }
-    ]
+    ],
+    "cypress/no-assigning-return-values": "error",
+    "cypress/no-unnecessary-waiting": "error",
+    "cypress/assertion-before-screenshot": "warn",
+    "cypress/no-force": "warn",
+    "cypress/no-async-tests": "error",
+    "cypress/no-pause": "error"
+  },
+  "env": {
+    "cypress/globals": true
   }
 }
