@@ -93,7 +93,13 @@ const Login: React.FC<LoginProps> = ({ validation, authentication, saveAccessTok
                 </div>
               )}
             </div>
-            <Submit disabled={!state.email && !state.password}>Login</Submit>
+            <Submit
+              disabled={
+                (!state.email && !state.password) || (!!state.emailError && !!state.passwordError)
+              }
+            >
+              Login
+            </Submit>
             <Link to='/signup' data-testid='register'>
               Don't have an account? Create one here
             </Link>
