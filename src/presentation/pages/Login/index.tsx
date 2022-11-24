@@ -72,7 +72,7 @@ const Login: React.FC<LoginProps> = ({ validation, authentication, saveAccessTok
                 placeholder='Type your mail'
               />
               {!state.isLoading && state.emailError && (
-                <div data-testid='main-error' className='form-error'>
+                <div data-testid='email-error' className='form-error'>
                   {state.emailError}
                 </div>
               )}
@@ -88,7 +88,7 @@ const Login: React.FC<LoginProps> = ({ validation, authentication, saveAccessTok
               />
 
               {!state.isLoading && state.passwordError && (
-                <div data-testid='main-error' className='form-error'>
+                <div data-testid='password-error' className='form-error'>
                   {state.passwordError}
                 </div>
               )}
