@@ -21,4 +21,12 @@ describe('Login', () => {
 
     cy.getByTestId('submit').should('have.attr', 'disabled')
   })
+
+  it('should present valid state if form is valid', () => {
+    cy.getByTestId('email').type(faker.internet.email())
+    cy.getByTestId('password').type(faker.random.alphaNumeric(5))
+
+    cy.getByTestId('submit').should('not.have.attr', 'disabled')
+    cy.getByTestId('error-wrap').should('not.have.descendants')
+  })
 })
