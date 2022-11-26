@@ -4,6 +4,10 @@ export const testInputStatus = (field: string, error: string): void => {
   cy.getByTestId(`${field}-error`).should('include.text', error)
 }
 
+export const testMainError = (error: string): void => {
+  cy.getByTestId('main-error').should('include.text', error)
+}
+
 export const testUrl = (path: string): void => {
   cy.url().should('equal', `${baseUrl}${path}`)
 }
