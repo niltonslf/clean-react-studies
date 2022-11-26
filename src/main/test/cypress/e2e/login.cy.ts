@@ -3,9 +3,14 @@ import { faker } from '@faker-js/faker'
 import { testInputStatus, testLocalStorageItem, testUrl } from '../support/form-helper'
 import { mockInvalidCredentialsError, mockOk } from './login-mocks'
 
-const simulateValidSubmit = (): void => {
+const simulateValidCredentials = (): void => {
   cy.getByTestId('email').type(faker.internet.email())
   cy.getByTestId('password').type(faker.random.alphaNumeric(5))
+}
+
+const simulateValidSubmit = (): void => {
+  simulateValidCredentials()
+  cy.getByTestId('submit').click()
 }
 
 describe('Login', () => {
@@ -32,7 +37,7 @@ describe('Login', () => {
   })
 
   it('should present valid state if form is valid', () => {
-    simulateValidSubmit()
+    simulateValidCredentials()
 
     cy.getByTestId('submit').should('not.have.attr', 'disabled')
     cy.getByTestId('error-wrap').should('not.have.descendants')
@@ -42,8 +47,6 @@ describe('Login', () => {
     mockInvalidCredentialsError()
 
     simulateValidSubmit()
-
-    cy.getByTestId('submit').click()
 
     cy.getByTestId('error-wrap')
       .getByTestId('main-error')
@@ -57,8 +60,6 @@ describe('Login', () => {
     mockOk()
 
     simulateValidSubmit()
-
-    cy.getByTestId('submit').click()
 
     testUrl('/')
     testLocalStorageItem('accessToken')
