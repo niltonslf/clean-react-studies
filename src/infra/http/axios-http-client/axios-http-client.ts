@@ -26,7 +26,7 @@ export class AxiosHttpClient implements HttpPostClient<any, any>, HttpGetClient 
       response = error.response
     }
 
-    return { statusCode: response.status, body: response.data }
+    return this.adapt(response)
   }
 
   async get(params: HttpGetParams): Promise<HttpResponse> {
@@ -37,6 +37,10 @@ export class AxiosHttpClient implements HttpPostClient<any, any>, HttpGetClient 
     } catch (error: any) {
       response = error.response
     }
+    return this.adapt(response)
+  }
+
+  private adapt(response: AxiosResponse): HttpResponse {
     return { statusCode: response.status, body: response.data }
   }
 }
