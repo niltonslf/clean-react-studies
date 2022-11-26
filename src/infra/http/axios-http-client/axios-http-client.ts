@@ -18,7 +18,7 @@ export class AxiosHttpClient implements HttpPostClient<any, any>, HttpGetClient 
   }
 
   async post(params: HttpPostParams<any>): Promise<HttpResponse<any>> {
-    let response: AxiosResponse<any>
+    let response: AxiosResponse
 
     try {
       response = await this.axiosInstance.post(params.url, params.body)
@@ -30,8 +30,13 @@ export class AxiosHttpClient implements HttpPostClient<any, any>, HttpGetClient 
   }
 
   async get(params: HttpGetParams): Promise<HttpResponse> {
-    const response = await axios.get(params.url)
+    let response: AxiosResponse
 
+    try {
+      response = await axios.get(params.url)
+    } catch (error: any) {
+      response = error.response
+    }
     return { statusCode: response.status, body: response.data }
   }
 }
