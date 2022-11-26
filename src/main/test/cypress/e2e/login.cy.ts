@@ -69,4 +69,19 @@ describe('Login', () => {
     cy.url().should('equal', `${baseUrl}/`)
     cy.window().then((window) => assert.isOk(window.localStorage.getItem('accessToken')))
   })
+
+  it('should dispatch form with enter key', () => {
+    cy.intercept('POST', /login/, {
+      statusCode: 200,
+      body: {
+        accessToken: faker.datatype.uuid(),
+      },
+    })
+
+    cy.getByTestId('email').type(faker.internet.email())
+    cy.getByTestId('password').type(faker.random.alphaNumeric(5)).type('{enter}')
+
+    cy.url().should('equal', `${baseUrl}/`)
+    cy.window().then((window) => assert.isOk(window.localStorage.getItem('accessToken')))
+  })
 })
