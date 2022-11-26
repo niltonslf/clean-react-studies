@@ -1,6 +1,6 @@
 import './signup.styles.scss'
 
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { AddAccount, SaveAccessToken } from '@/domain/usecases'
@@ -30,9 +30,10 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount, saveAccessToken 
     passwordConfirmationError: '',
   })
 
-  const handleDisabled = (): boolean => {
-    return !state.email && !state.password && !state.passwordConfirmation && !state.name
-  }
+  const handleDisabled = useCallback(
+    () => !state.email && !state.password && !state.passwordConfirmation && !state.name,
+    []
+  )
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
@@ -83,14 +84,18 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount, saveAccessToken 
             <div className='form-group' data-testid='name-group'>
               <Input data-testid='name' type='name' name='name' placeholder='Type your name' />
               {!state.isLoading && state.nameError && (
-                <div className='form-error'>{state.nameError}</div>
+                <div className='form-error' data-testid='name-error'>
+                  {state.nameError}
+                </div>
               )}
             </div>
 
             <div className='form-group' data-testid='email-group'>
               <Input data-testid='email' type='email' name='email' placeholder='Type your mail' />
               {!state.isLoading && state.emailError && (
-                <div className='form-error'>{state.emailError}</div>
+                <div className='form-error' data-testid='email-error'>
+                  {state.emailError}
+                </div>
               )}
             </div>
 
@@ -102,7 +107,9 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount, saveAccessToken 
                 placeholder='Type your password'
               />
               {!state.isLoading && state.passwordError && (
-                <div className='form-error'>{state.passwordError}</div>
+                <div className='form-error' data-testid='password-error'>
+                  {state.passwordError}
+                </div>
               )}
             </div>
 
@@ -114,7 +121,9 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount, saveAccessToken 
                 placeholder='Confirme your password'
               />
               {!state.isLoading && state.passwordConfirmationError && (
-                <div className='form-error'>{state.passwordConfirmationError}</div>
+                <div className='form-error' data-testid='password-confirmation-error'>
+                  {state.passwordConfirmationError}
+                </div>
               )}
             </div>
 
