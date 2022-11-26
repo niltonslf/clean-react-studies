@@ -11,6 +11,6 @@ export type HttpPostParams<Body> = {
  * @template Body
  * @template Response
  */
-export interface HttpPostClient<Body, Response> {
+export interface HttpPostClient<Body = any, Response = any> {
   post: (params: HttpPostParams<Body>) => Promise<HttpResponse<Response>>
 }
