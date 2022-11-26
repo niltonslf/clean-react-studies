@@ -9,6 +9,15 @@ export const mockInvalidCredentialsError = (url: RegExp): void => {
   })
 }
 
+export const mockUnexpectedError = (url: RegExp): void => {
+  cy.intercept('POST', url, {
+    statusCode: 500,
+    body: {
+      error: faker.random.words(),
+    },
+  })
+}
+
 export const mockEmailInUseError = (url: RegExp): void => {
   cy.intercept('POST', url, {
     statusCode: 403,
