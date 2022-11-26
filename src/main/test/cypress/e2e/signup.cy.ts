@@ -93,4 +93,11 @@ describe('SignUp', () => {
 
     FormHelper.testUrl('/')
   })
+
+  it('should not call submit if form is invalid', () => {
+    Http.mockOk()
+
+    cy.getByTestId('email').type(faker.internet.email())
+    cy.getByTestId('submit').should('have.attr', 'disabled')
+  })
 })
