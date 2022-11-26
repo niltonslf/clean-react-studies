@@ -32,4 +32,21 @@ describe('SignUp', () => {
 
     cy.getByTestId('submit').should('have.attr', 'disabled')
   })
+
+  it('should present valid state if form is valid', () => {
+    cy.getByTestId('name').type(faker.name.fullName())
+    cy.getByTestId('name-group').find('*').should('have.lengthOf', 1)
+
+    cy.getByTestId('email').type(faker.internet.email())
+    cy.getByTestId('email-group').find('*').should('have.lengthOf', 1)
+
+    const password = faker.internet.password()
+    cy.getByTestId('password').type(password)
+    cy.getByTestId('password-group').find('*').should('have.lengthOf', 1)
+
+    cy.getByTestId('passwordConfirmation').type(password)
+    cy.getByTestId('password-confirmation-group').find('*').should('have.lengthOf', 1)
+
+    cy.getByTestId('submit').should('have.attr', 'disabled')
+  })
 })
