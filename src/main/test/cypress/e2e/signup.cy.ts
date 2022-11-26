@@ -47,6 +47,6 @@ describe('SignUp', () => {
     cy.getByTestId('passwordConfirmation').type(password)
     cy.getByTestId('password-confirmation-group').find('*').should('have.lengthOf', 1)
 
-    cy.getByTestId('submit').should('have.attr', 'disabled')
+    cy.getByTestId('submit').should('not.have.attr', 'disabled')
   })
 })
