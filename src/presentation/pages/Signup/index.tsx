@@ -3,6 +3,7 @@ import './signup.styles.scss'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
+import { UnexpectedError } from '@/domain/errors'
 import { AddAccount, SaveAccessToken } from '@/domain/usecases'
 import { Input, Submit, FormStatus } from '@/presentation/components'
 import { FormContext } from '@/presentation/components/Form/context'
@@ -53,6 +54,8 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount, saveAccessToken 
       })
 
       if (account?.accessToken) await saveAccessToken.save(account?.accessToken)
+      else throw new UnexpectedError()
+
       navigate('/')
     } catch (error: any) {
       setState((state) => ({ ...state, isLoading: false, requestError: error.message }))
