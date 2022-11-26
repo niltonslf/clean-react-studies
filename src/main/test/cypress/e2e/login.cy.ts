@@ -70,18 +70,17 @@ describe('Login', () => {
     cy.window().then((window) => assert.isOk(window.localStorage.getItem('accessToken')))
   })
 
-  it('should dispatch form with enter key', () => {
+  it('should not call submit if form is invalid', () => {
     cy.intercept('POST', /login/, {
       statusCode: 200,
       body: {
         accessToken: faker.datatype.uuid(),
       },
-    })
+    }).as('request')
 
     cy.getByTestId('email').type(faker.internet.email())
-    cy.getByTestId('password').type(faker.random.alphaNumeric(5)).type('{enter}')
+    cy.getByTestId('submit').click()
 
-    cy.url().should('equal', `${baseUrl}/`)
-    cy.window().then((window) => assert.isOk(window.localStorage.getItem('accessToken')))
+    cy.get('@request.all').should('have.length', 0)
   })
 })
