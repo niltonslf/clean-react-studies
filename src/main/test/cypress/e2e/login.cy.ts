@@ -33,15 +33,19 @@ describe('Login', () => {
   })
 
   it('should present error if invalid credentials are provided', () => {
+    cy.intercept('POST', /login/, {
+      statusCode: 401,
+      body: {
+        error: faker.random.words(),
+      },
+    })
+
     cy.getByTestId('email').type(faker.internet.email())
     cy.getByTestId('password').type(faker.random.alphaNumeric(5))
 
     cy.getByTestId('submit').click()
+
     cy.getByTestId('error-wrap')
-      .getByTestId('loader')
-      .should('exist')
-      .getByTestId('main-error')
-      .should('not.exist')
       .getByTestId('main-error')
       .should('exist')
       .contains('Credenciais inválidas')
@@ -50,18 +54,19 @@ describe('Login', () => {
   })
 
   it('should save accessToken if valid credentials are provided', () => {
+    cy.intercept('POST', /login/, {
+      statusCode: 200,
+      body: {
+        accessToken: faker.datatype.uuid(),
+      },
+    })
+
     cy.getByTestId('email').type('mango@gmail.com')
     cy.getByTestId('password').type('12345')
 
     cy.getByTestId('submit').click()
-    cy.getByTestId('error-wrap')
-      .getByTestId('loader')
-      .should('exist')
-      .getByTestId('main-error')
-      .should('not.exist')
 
     cy.url().should('equal', `${baseUrl}/`)
-
     cy.window().then((window) => assert.isOk(window.localStorage.getItem('accessToken')))
   })
 })
