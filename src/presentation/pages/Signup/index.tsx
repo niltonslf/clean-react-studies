@@ -30,7 +30,7 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount, saveAccessToken 
     passwordConfirmationError: '',
   })
 
-  const handleDisabled =
+  const isDisabled =
     !!state.emailError ||
     !!state.passwordError ||
     !!state.passwordConfirmationError ||
@@ -128,7 +128,7 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount, saveAccessToken 
               )}
             </div>
 
-            <Submit disabled={handleDisabled} data-testid='submit'>
+            <Submit disabled={isDisabled} data-testid='submit'>
               Register
             </Submit>
             <Link to='/login' data-testid='login-link' className='back-to-login'>

@@ -62,20 +62,21 @@ describe('SignUp Component', () => {
   afterEach(cleanup)
 
   test('Should start with initial state', () => {
-    const { sut } = makeSut()
-
-    Helper.testChildCount(sut, 'error-wrap', 0)
-    Helper.testButtonIsDisabled(sut, 'submit', true)
+    const { sut } = makeSut({ validationError: 'error' })
 
     Helper.testFieldIsEmpty(sut, 'name')
     Helper.testFieldIsEmpty(sut, 'email')
     Helper.testFieldIsEmpty(sut, 'password')
     Helper.testFieldIsEmpty(sut, 'passwordConfirmation')
 
-    Helper.testChildCount(sut, 'name-group', 1)
-    Helper.testChildCount(sut, 'email-group', 1)
-    Helper.testChildCount(sut, 'password-group', 1)
-    Helper.testChildCount(sut, 'password-confirmation-group', 1)
+    Helper.testChildCount(sut, 'name-group', 2)
+    Helper.testChildCount(sut, 'email-group', 2)
+    Helper.testChildCount(sut, 'password-group', 2)
+    Helper.testChildCount(sut, 'password-confirmation-group', 2)
+
+    Helper.testChildCount(sut, 'error-wrap', 0)
+
+    Helper.testButtonIsDisabled(sut, 'submit', true)
   })
 
   test('should show Name error if validation fails', () => {
