@@ -86,4 +86,11 @@ describe('SignUp', () => {
     FormHelper.testMainError('Algo de errado aconteceu. Tente novamente em breve.')
     FormHelper.testUrl('/signup')
   })
+
+  it('should persist accessToken if valid credentials are provided', () => {
+    Http.mockOk()
+    simulateValidSubmit()
+
+    FormHelper.testUrl('/')
+  })
 })
