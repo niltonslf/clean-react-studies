@@ -1,6 +1,6 @@
 import './signup.styles.scss'
 
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { AddAccount, SaveAccessToken } from '@/domain/usecases'
@@ -30,10 +30,11 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount, saveAccessToken 
     passwordConfirmationError: '',
   })
 
-  const handleDisabled = useCallback(
-    () => !state.email && !state.password && !state.passwordConfirmation && !state.name,
-    []
-  )
+  const handleDisabled =
+    !!state.emailError ||
+    !!state.passwordError ||
+    !!state.passwordConfirmationError ||
+    !!state.nameError
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
@@ -127,7 +128,7 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount, saveAccessToken 
               )}
             </div>
 
-            <Submit disabled={handleDisabled()} data-testid='submit'>
+            <Submit disabled={handleDisabled} data-testid='submit'>
               Register
             </Submit>
             <Link to='/login' data-testid='login-link' className='back-to-login'>
