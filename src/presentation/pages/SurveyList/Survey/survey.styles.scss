@@ -2,11 +2,36 @@
   min-width: 24%;
   background: white;
   border-radius: 10px;
-  overflow: hidden;
   height: 200px;
   box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-wrap: wrap;
+  position: relative;
+
+  .icon-wrap {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+
+    img {
+      width: auto;
+      height: 15px;
+    }
+
+    &.green {
+      background: green;
+    }
+
+    &.red {
+      background: red;
+    }
+  }
 
   .content {
     width: 100%;
@@ -49,6 +74,10 @@
     height: 50px;
     justify-content: center;
     align-items: center;
+
+    border-bottom-left-radius: 10px;
+
+    border-bottom-right-radius: 10px;
 
     &:hover {
       background-color: gray;

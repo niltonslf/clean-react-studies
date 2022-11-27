@@ -7,6 +7,9 @@ interface SurveyProps {
 const Survey: React.FC<SurveyProps> = () => {
   return (
     <article className='survey'>
+      <div className='icon-wrap green'>
+        <img src='/assets/thumb-up.png' alt='' />
+      </div>
       <div className='content'>
         <div className='content-date'>
           <span className='day'>22</span>
