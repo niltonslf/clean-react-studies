@@ -1,9 +1,15 @@
 .header {
   background: black;
   color: white;
-  height: 50px;
-  display: flex;
+}
 
+.header-content {
+  max-width: 100%;
+  width: 1200px;
+  margin: 0 auto;
+
+  display: flex;
+  height: 50px;
   justify-content: space-between;
   align-items: center;
   padding: 0 1rem;

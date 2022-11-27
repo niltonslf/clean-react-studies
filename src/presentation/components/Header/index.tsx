@@ -3,10 +3,12 @@ import './header.styles.scss'
 const Header: React.FC = () => {
   return (
     <header className='header'>
-      <a href='/'>Enquetes</a>
+      <div className='header-content'>
+        <a href='/'>Enquetes</a>
 
-      <div>
-        <span>Nilton</span> | <a href='#'>Sair</a>
+        <div>
+          <span>Nilton</span> | <a href='#'>Sair</a>
+        </div>
       </div>
     </header>
   )
