@@ -16,4 +16,12 @@
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
   flex-wrap: wrap;
+
+  @media screen and (max-width: 780px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media screen and (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
 }
