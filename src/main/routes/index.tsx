@@ -1,13 +1,10 @@
 import { Routes as Router, Route, BrowserRouter } from 'react-router-dom'
 
-import SurveyList from '../pages/SurveyList'
+import LoginFactory from '@/main/factories/pages/login/login-factory'
+import SignUpFactory from '@/main/factories/pages/signup/signup-factory'
+import SurveyList from '@/presentation/pages/SurveyList'
 
-interface AppProps {
-  LoginFactory: React.FC
-  SignUpFactory: React.FC
-}
-
-const Routes: React.FC<AppProps> = ({ LoginFactory, SignUpFactory }) => {
+const Routes: React.FC = () => {
   return (
     <BrowserRouter>
       <Router>
