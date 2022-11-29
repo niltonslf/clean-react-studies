@@ -2,18 +2,18 @@ import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 import { expect, describe, test, vi, afterEach } from 'vitest'
 
-import { InvalidCredentialsError } from '@/domain/errors'
+import { AccountModel } from '@/domain/models'
+import { ApiContext } from '@/presentation/context'
 import { Login } from '@/presentation/pages'
 import { AuthenticationSpy, Helper, ValidationSpy } from '@/presentation/test'
-import { UpdateCurrentAccountMock } from '@/presentation/test/mock-save-access-token'
 import { faker } from '@faker-js/faker'
-import { act, cleanup, fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
+import { cleanup, fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
 
 type SutTypes = {
   sut: RenderResult
   validationSpy: ValidationSpy
   authenticationSpy: AuthenticationSpy
-  updateCurrentAccount: UpdateCurrentAccountMock
+  setCurrentAccountMock: (account: AccountModel) => void
 }
 
 const history = createMemoryHistory({ initialEntries: ['/login'] })
@@ -21,19 +21,18 @@ const history = createMemoryHistory({ initialEntries: ['/login'] })
 const makeSut = (): SutTypes => {
   const validationSpy = new ValidationSpy()
   const authenticationSpy = new AuthenticationSpy()
-  const updateCurrentAccount = new UpdateCurrentAccountMock()
+
+  const setCurrentAccountMock = vi.fn()
 
   const sut = render(
-    <Router location={history.location} navigator={history}>
-      <Login
-        validation={validationSpy}
-        authentication={authenticationSpy}
-        updateCurrentAccount={updateCurrentAccount}
-      />
-    </Router>
+    <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
+      <Router location={history.location} navigator={history}>
+        <Login validation={validationSpy} authentication={authenticationSpy} />
+      </Router>
+    </ApiContext.Provider>
   )
 
-  return { sut, validationSpy, authenticationSpy, updateCurrentAccount }
+  return { sut, validationSpy, authenticationSpy, setCurrentAccountMock }
 }
 
 const simulateValidSubmit = (
@@ -122,25 +121,13 @@ describe('Login Component', () => {
     expect(authenticationSpy.callsCount).toBe(1)
   })
 
-  test('should present error if Authentication fails', async () => {
-    const { sut, authenticationSpy } = makeSut()
-
-    const error = new InvalidCredentialsError()
-    vi.spyOn(authenticationSpy, 'auth').mockReturnValue(Promise.reject(error))
-
-    await act(async () => simulateValidSubmit(sut))
-
-    Helper.testElementText(sut, 'main-error', error.message)
-    Helper.testChildCount(sut, 'error-wrap', 1)
-  })
-
   test('should call SaveLocalAccessToken on success', async () => {
-    const { sut, authenticationSpy, updateCurrentAccount } = makeSut()
+    const { sut, authenticationSpy, setCurrentAccountMock } = makeSut()
     simulateValidSubmit(sut)
 
     await waitFor(() => sut.getByTestId('form'))
 
-    expect(updateCurrentAccount.account).toEqual(authenticationSpy.account)
+    expect(setCurrentAccountMock).toHaveBeenCalledWith(authenticationSpy.account)
     expect(history.location.pathname).toBe('/')
   })
 

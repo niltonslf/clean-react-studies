@@ -1,22 +1,23 @@
 import './signup.styles.scss'
 
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { UnexpectedError } from '@/domain/errors'
-import { AddAccount, UpdateCurrentAccount } from '@/domain/usecases'
+import { AddAccount } from '@/domain/usecases'
 import { Input, Submit, FormStatus } from '@/presentation/components'
 import { FormContext } from '@/presentation/components/Form/context'
+import { ApiContext } from '@/presentation/context'
 import { Validation } from '@/presentation/protocols/validation'
 
 interface LoginProps {
   validation: Validation
   addAccount: AddAccount
-  updateCurrentAccount: UpdateCurrentAccount
 }
 
-const SignUp: React.FC<LoginProps> = ({ validation, addAccount, updateCurrentAccount }) => {
+const SignUp: React.FC<LoginProps> = ({ validation, addAccount }) => {
   const navigate = useNavigate()
+  const { setCurrentAccount } = useContext(ApiContext)
 
   const [state, setState] = useState({
     isLoading: false,
@@ -53,7 +54,8 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount, updateCurrentAcc
         passwordConfirmation: state.passwordConfirmation,
       })
 
-      if (account?.accessToken && account.name) await updateCurrentAccount.save(account)
+      if (account?.accessToken && account.name && setCurrentAccount)
+        await setCurrentAccount(account)
       else throw new UnexpectedError()
 
       navigate('/')

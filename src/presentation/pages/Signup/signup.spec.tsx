@@ -3,17 +3,18 @@ import { Router } from 'react-router-dom'
 import { afterEach, describe, expect, test, vi } from 'vitest'
 
 import { EmailInUseError } from '@/domain/errors'
+import { AccountModel } from '@/domain/models'
+import { ApiContext } from '@/presentation/context'
 import { SignUp } from '@/presentation/pages'
 import { AddAccountSpy, Helper, ValidationSpy } from '@/presentation/test/'
 import { testChildCount } from '@/presentation/test/form-helper'
-import { UpdateCurrentAccountMock } from '@/presentation/test/mock-save-access-token'
 import { faker } from '@faker-js/faker'
 import { act, cleanup, fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
 
 type SutTypes = {
   sut: RenderResult
   addAccountSpy: AddAccountSpy
-  updateAccountModel: UpdateCurrentAccountMock
+  setCurrentAccountMock: (account: AccountModel) => void
 }
 
 type SutParams = {
@@ -27,19 +28,18 @@ const makeSut = (params?: SutParams): SutTypes => {
   validationStub.errorMessage = params?.validationError ?? ''
 
   const addAccountSpy = new AddAccountSpy()
-  const updateAccountModel = new UpdateCurrentAccountMock()
+
+  const setCurrentAccountMock = vi.fn()
 
   const sut = render(
-    <Router location={history.location} navigator={history}>
-      <SignUp
-        validation={validationStub}
-        addAccount={addAccountSpy}
-        updateCurrentAccount={updateAccountModel}
-      />
-    </Router>
+    <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
+      <Router location={history.location} navigator={history}>
+        <SignUp validation={validationStub} addAccount={addAccountSpy} />
+      </Router>
+    </ApiContext.Provider>
   )
 
-  return { sut, addAccountSpy, updateAccountModel }
+  return { sut, addAccountSpy, setCurrentAccountMock }
 }
 
 const simulateValidSubmit = async (
@@ -195,25 +195,13 @@ describe('SignUp Component', () => {
   })
 
   test('should call SaveLocalAccessToken on success', async () => {
-    const { sut, addAccountSpy, updateAccountModel } = makeSut()
+    const { sut, addAccountSpy, setCurrentAccountMock } = makeSut()
 
     await act(async () => await simulateValidSubmit(sut))
     await waitFor(() => sut.getByTestId('form'))
 
-    expect(updateAccountModel.account).toEqual(addAccountSpy.account)
+    expect(setCurrentAccountMock).toHaveBeenCalledWith(addAccountSpy.account)
     expect(history.location.pathname).toBe('/')
-  })
-
-  test('should call SaveLocalAccessToken on fail', async () => {
-    const { sut, updateAccountModel } = makeSut()
-    const error = new EmailInUseError()
-
-    vi.spyOn(updateAccountModel, 'save').mockRejectedValueOnce(error)
-
-    await act(async () => await simulateValidSubmit(sut))
-
-    Helper.testElementText(sut, 'main-error', error.message)
-    Helper.testChildCount(sut, 'error-wrap', 1)
   })
 
   test('should go back to login page', () => {
