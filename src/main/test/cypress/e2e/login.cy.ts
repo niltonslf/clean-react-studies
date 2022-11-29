@@ -62,7 +62,7 @@ describe('Login', () => {
     simulateValidSubmit()
 
     testUrl('/')
-    testLocalStorageItem('accessToken')
+    testLocalStorageItem('account')
   })
 
   it('should not call submit if form is invalid', () => {

@@ -6,14 +6,14 @@ import { EmailInUseError } from '@/domain/errors'
 import { SignUp } from '@/presentation/pages'
 import { AddAccountSpy, Helper, ValidationSpy } from '@/presentation/test/'
 import { testChildCount } from '@/presentation/test/form-helper'
-import { SaveAccessTokenMock } from '@/presentation/test/save-access-token-mock'
+import { UpdateCurrentAccountMock } from '@/presentation/test/mock-save-access-token'
 import { faker } from '@faker-js/faker'
 import { act, cleanup, fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
 
 type SutTypes = {
   sut: RenderResult
   addAccountSpy: AddAccountSpy
-  saveAccessTokenMock: SaveAccessTokenMock
+  updateAccountModel: UpdateCurrentAccountMock
 }
 
 type SutParams = {
@@ -27,19 +27,19 @@ const makeSut = (params?: SutParams): SutTypes => {
   validationStub.errorMessage = params?.validationError ?? ''
 
   const addAccountSpy = new AddAccountSpy()
-  const saveAccessTokenMock = new SaveAccessTokenMock()
+  const updateAccountModel = new UpdateCurrentAccountMock()
 
   const sut = render(
     <Router location={history.location} navigator={history}>
       <SignUp
         validation={validationStub}
         addAccount={addAccountSpy}
-        saveAccessToken={saveAccessTokenMock}
+        updateCurrentAccount={updateAccountModel}
       />
     </Router>
   )
 
-  return { sut, addAccountSpy, saveAccessTokenMock }
+  return { sut, addAccountSpy, updateAccountModel }
 }
 
 const simulateValidSubmit = async (
@@ -195,20 +195,20 @@ describe('SignUp Component', () => {
   })
 
   test('should call SaveLocalAccessToken on success', async () => {
-    const { sut, addAccountSpy, saveAccessTokenMock } = makeSut()
+    const { sut, addAccountSpy, updateAccountModel } = makeSut()
 
     await act(async () => await simulateValidSubmit(sut))
     await waitFor(() => sut.getByTestId('form'))
 
-    expect(saveAccessTokenMock.accessToken).toBe(addAccountSpy.account.accessToken)
+    expect(updateAccountModel.account).toEqual(addAccountSpy.account)
     expect(history.location.pathname).toBe('/')
   })
 
   test('should call SaveLocalAccessToken on fail', async () => {
-    const { sut, saveAccessTokenMock } = makeSut()
+    const { sut, updateAccountModel } = makeSut()
     const error = new EmailInUseError()
 
-    vi.spyOn(saveAccessTokenMock, 'save').mockRejectedValueOnce(error)
+    vi.spyOn(updateAccountModel, 'save').mockRejectedValueOnce(error)
 
     await act(async () => await simulateValidSubmit(sut))
 

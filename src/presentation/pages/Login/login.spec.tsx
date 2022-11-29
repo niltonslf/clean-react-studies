@@ -5,7 +5,7 @@ import { expect, describe, test, vi, afterEach } from 'vitest'
 import { InvalidCredentialsError } from '@/domain/errors'
 import { Login } from '@/presentation/pages'
 import { AuthenticationSpy, Helper, ValidationSpy } from '@/presentation/test'
-import { SaveAccessTokenMock } from '@/presentation/test/save-access-token-mock'
+import { UpdateCurrentAccountMock } from '@/presentation/test/mock-save-access-token'
 import { faker } from '@faker-js/faker'
 import { act, cleanup, fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
 
@@ -13,7 +13,7 @@ type SutTypes = {
   sut: RenderResult
   validationSpy: ValidationSpy
   authenticationSpy: AuthenticationSpy
-  saveAccessTokenMock: SaveAccessTokenMock
+  updateCurrentAccount: UpdateCurrentAccountMock
 }
 
 const history = createMemoryHistory({ initialEntries: ['/login'] })
@@ -21,19 +21,19 @@ const history = createMemoryHistory({ initialEntries: ['/login'] })
 const makeSut = (): SutTypes => {
   const validationSpy = new ValidationSpy()
   const authenticationSpy = new AuthenticationSpy()
-  const saveAccessTokenMock = new SaveAccessTokenMock()
+  const updateCurrentAccount = new UpdateCurrentAccountMock()
 
   const sut = render(
     <Router location={history.location} navigator={history}>
       <Login
         validation={validationSpy}
         authentication={authenticationSpy}
-        saveAccessToken={saveAccessTokenMock}
+        updateCurrentAccount={updateCurrentAccount}
       />
     </Router>
   )
 
-  return { sut, validationSpy, authenticationSpy, saveAccessTokenMock }
+  return { sut, validationSpy, authenticationSpy, updateCurrentAccount }
 }
 
 const simulateValidSubmit = (
@@ -134,13 +134,13 @@ describe('Login Component', () => {
     Helper.testChildCount(sut, 'error-wrap', 1)
   })
 
-  test('should call SaveLocalAccessToken on sucess', async () => {
-    const { sut, authenticationSpy, saveAccessTokenMock } = makeSut()
+  test('should call SaveLocalAccessToken on success', async () => {
+    const { sut, authenticationSpy, updateCurrentAccount } = makeSut()
     simulateValidSubmit(sut)
 
     await waitFor(() => sut.getByTestId('form'))
 
-    expect(saveAccessTokenMock.accessToken).toBe(authenticationSpy.account.accessToken)
+    expect(updateCurrentAccount.account).toEqual(authenticationSpy.account)
     expect(history.location.pathname).toBe('/')
   })
 

@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { makeRemoteAuthenticationFactory } from '@/main/factories/usecases'
-import { makeLocalSaveAccessTokenFactory } from '@/main/factories/usecases/save-access-token/local-save-access-token-factory'
+import { makeLocalUpdateCurrentAccount } from '@/main/factories/usecases/save-access-token/local-save-access-token-factory'
 import Login from '@/presentation/pages/Login'
 
 import { makeLoginValidationFactory } from './login-validation-factory'
@@ -14,7 +14,7 @@ const LoginFactory: React.FC<LoginFactoryProps> = () => {
     <Login
       authentication={makeRemoteAuthenticationFactory()}
       validation={makeLoginValidationFactory()}
-      saveAccessToken={makeLocalSaveAccessTokenFactory()}
+      updateCurrentAccount={makeLocalUpdateCurrentAccount()}
     />
   )
 }

@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
-import { LocalSaveAccessToken } from '@/data/usecases/save-access-token/local-save-access-token'
-import { SaveAccessToken } from '@/domain/usecases'
+import { LocalUpdateCurrentAccount } from '@/data/usecases/update-current-account/local-update-current-account'
+import { UpdateCurrentAccount } from '@/domain/usecases'
 import { makeLocalStorageAdapterFactory } from '@/main/factories/cache/local-storage-adapter-factory'
 
-export const makeLocalSaveAccessTokenFactory = (): SaveAccessToken => {
-  return new LocalSaveAccessToken(makeLocalStorageAdapterFactory())
+export const makeLocalUpdateCurrentAccount = (): UpdateCurrentAccount => {
+  return new LocalUpdateCurrentAccount(makeLocalStorageAdapterFactory())
 }

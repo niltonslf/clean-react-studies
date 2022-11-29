@@ -3,7 +3,7 @@ import './login-styles.scss'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import { Authentication, SaveAccessToken } from '@/domain/usecases'
+import { Authentication, UpdateCurrentAccount } from '@/domain/usecases'
 import { Input, Submit, FormStatus } from '@/presentation/components'
 import { StateProps, FormContext } from '@/presentation/components/Form/context'
 import { Validation } from '@/presentation/protocols/validation'
@@ -11,10 +11,10 @@ import { Validation } from '@/presentation/protocols/validation'
 interface LoginProps {
   validation: Validation
   authentication: Authentication
-  saveAccessToken: SaveAccessToken
+  updateCurrentAccount: UpdateCurrentAccount
 }
 
-const Login: React.FC<LoginProps> = ({ validation, authentication, saveAccessToken }) => {
+const Login: React.FC<LoginProps> = ({ validation, authentication, updateCurrentAccount }) => {
   const navigate = useNavigate()
 
   const [state, setState] = useState<StateProps>({
@@ -34,7 +34,7 @@ const Login: React.FC<LoginProps> = ({ validation, authentication, saveAccessTok
       setState(() => ({ ...state, isLoading: true }))
       const account = await authentication.auth({ email: state.email, password: state.password })
 
-      if (account?.accessToken) await saveAccessToken.save(account?.accessToken)
+      if (account) await updateCurrentAccount.save(account)
 
       navigate('/')
     } catch (error: any) {

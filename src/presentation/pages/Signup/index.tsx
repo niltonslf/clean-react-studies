@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { UnexpectedError } from '@/domain/errors'
-import { AddAccount, SaveAccessToken } from '@/domain/usecases'
+import { AddAccount, UpdateCurrentAccount } from '@/domain/usecases'
 import { Input, Submit, FormStatus } from '@/presentation/components'
 import { FormContext } from '@/presentation/components/Form/context'
 import { Validation } from '@/presentation/protocols/validation'
@@ -12,10 +12,10 @@ import { Validation } from '@/presentation/protocols/validation'
 interface LoginProps {
   validation: Validation
   addAccount: AddAccount
-  saveAccessToken: SaveAccessToken
+  updateCurrentAccount: UpdateCurrentAccount
 }
 
-const SignUp: React.FC<LoginProps> = ({ validation, addAccount, saveAccessToken }) => {
+const SignUp: React.FC<LoginProps> = ({ validation, addAccount, updateCurrentAccount }) => {
   const navigate = useNavigate()
 
   const [state, setState] = useState({
@@ -53,7 +53,7 @@ const SignUp: React.FC<LoginProps> = ({ validation, addAccount, saveAccessToken 
         passwordConfirmation: state.passwordConfirmation,
       })
 
-      if (account?.accessToken) await saveAccessToken.save(account?.accessToken)
+      if (account?.accessToken && account.name) await updateCurrentAccount.save(account)
       else throw new UnexpectedError()
 
       navigate('/')
