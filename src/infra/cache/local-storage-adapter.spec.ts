@@ -13,12 +13,12 @@ describe('LocalStorageAdapter', () => {
     localStorage.clear()
   })
 
-  test('should call LocalStorage with correct values', async () => {
+  test('should call LocalStorage with correct values', () => {
     const sut = makeSut()
     const key = faker.database.column()
     const value = faker.datatype.uuid()
 
-    await sut.set(key, value)
+    sut.set(key, value)
     expect(localStorage.setItem).toHaveBeenCalledWith(key, value)
   })
 })
