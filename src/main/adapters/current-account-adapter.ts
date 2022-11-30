@@ -7,3 +7,7 @@ export const setCurrentAccountAdapter = (account: AccountModel): void => {
   if (!account.accessToken) throw new UnexpectedError()
   makeLocalStorageAdapterFactory().set('account', account)
 }
+
+export const getCurrentAccountAdapter = (): AccountModel => {
+  return makeLocalStorageAdapterFactory().get('account')
+}
