@@ -30,6 +30,7 @@
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
     "@faker-js/faker": "^7.6.0",
+    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@types/axios": "^0.14.0",
     "@types/react": "^18.0.25",

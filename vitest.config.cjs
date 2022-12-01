@@ -8,7 +8,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['vitest-localstorage-mock'],
+    setupFiles: ['vitest-localstorage-mock', 'vitest-setup.js'],
     mockReset: false,
     exclude: ['**/node_modules/**', './src/main/test/cypress/**'],
   },
