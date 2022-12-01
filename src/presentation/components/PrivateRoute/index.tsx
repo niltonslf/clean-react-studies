@@ -4,15 +4,15 @@ import { Navigate } from 'react-router-dom'
 import { ApiContext } from '@/presentation/context'
 
 type PrivateRouteProps = {
-  children: React.ReactElement
+  component: React.ReactElement
 }
 
-export const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
+export const PrivateRoute: React.FC<PrivateRouteProps> = ({ component }) => {
   const { getCurrentAccount } = useContext(ApiContext)
 
   const account = getCurrentAccount ? getCurrentAccount() : null
 
-  if (account?.accessToken) return children
+  if (account?.accessToken) return component
   return <Navigate to='/login' />
 }
 PrivateRoute.displayName = 'PrivateRoute'

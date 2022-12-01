@@ -6,7 +6,7 @@ import { mockAccountModel } from '@/domain/test'
 import { ApiContext } from '@/presentation/context'
 import { render } from '@testing-library/react'
 
-import { PrivateRoute } from './private-route'
+import { PrivateRoute } from '.'
 
 type SutTypes = {
   history: MemoryHistory
@@ -18,9 +18,7 @@ const makeSut = (account = mockAccountModel()): SutTypes => {
   render(
     <ApiContext.Provider value={{ getCurrentAccount: () => account }}>
       <Router location={history.location} navigator={history}>
-        <PrivateRoute>
-          <>any route</>
-        </PrivateRoute>
+        <PrivateRoute component={<>any route</>}></PrivateRoute>
       </Router>
     </ApiContext.Provider>
   )
