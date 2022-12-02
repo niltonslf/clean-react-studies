@@ -1,10 +1,10 @@
 import './survey.styles.scss'
 
-interface SurveyProps {
+interface SurveyItemProps {
   any?: any
 }
 
-const Survey: React.FC<SurveyProps> = () => {
+const SurveyItem: React.FC<SurveyItemProps> = () => {
   return (
     <article className='survey'>
       <div className='icon-wrap green'>
@@ -24,6 +24,6 @@ const Survey: React.FC<SurveyProps> = () => {
     </article>
   )
 }
-Survey.displayName = 'Survey'
+SurveyItem.displayName = 'SurveyItem'
 
-export default Survey
+export default SurveyItem
