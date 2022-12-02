@@ -22,7 +22,7 @@ const Routes: React.FC = () => {
         <Router>
           <Route path='/login' element={<LoginFactory />} />
           <Route path='/signup' element={<SignUpFactory />} />
-          <Route path='/survey' element={<PrivateRoute component={<SurveyList />} />} />
+          <Route path='/' element={<PrivateRoute component={<SurveyList />} />} />
         </Router>
       </BrowserRouter>
     </ApiContext.Provider>
