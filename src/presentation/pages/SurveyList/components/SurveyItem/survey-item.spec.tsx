@@ -13,11 +13,12 @@ describe('SurveyItem', () => {
   test('should render with correct values', () => {
     const survey = Object.assign(mockSurveyModel(), {
       date: new Date('2022-01-20T00:00:00'),
+      didAnswer: true,
     })
 
     makeSut(survey)
 
-    expect(screen.getByTestId('icon')).toHaveProperty('src')
+    expect(screen.getByTestId('icon')).toHaveClass('green')
     expect(screen.getByTestId('question')).toHaveTextContent(survey.question)
     expect(screen.getByTestId('day')).toHaveTextContent('20')
     expect(screen.getByTestId('month')).toHaveTextContent('jan')
@@ -27,11 +28,12 @@ describe('SurveyItem', () => {
   test('should render with correct values', () => {
     const survey = Object.assign(mockSurveyModel(), {
       date: new Date('2021-02-03T00:00:00'),
+      didAnswer: false,
     })
 
     makeSut(survey)
 
-    expect(screen.getByTestId('icon')).toHaveProperty('src')
+    expect(screen.getByTestId('icon')).toHaveClass('red')
     expect(screen.getByTestId('question')).toHaveTextContent(survey.question)
     expect(screen.getByTestId('day')).toHaveTextContent('03')
     expect(screen.getByTestId('month')).toHaveTextContent('fev')
