@@ -3,6 +3,7 @@ import { HttpResponse } from './'
 export type HttpPostParams<Body> = {
   url: string
   body?: Body
+  headers?: any
 }
 
 /**
