@@ -1,6 +1,6 @@
 import { Header } from '@/presentation/components'
 
-import SurveyItem from './components/SurveyItem'
+import SurveyItemLoader from './components/SurveyItemLoader'
 import './survey-list-styles.scss'
 
 const SurveyList: React.FC = () => {
@@ -10,10 +10,8 @@ const SurveyList: React.FC = () => {
 
       <section className='survey-content'>
         <h1 className='survey-content__title'>Enquetes</h1>
-        <div className='survey-content__list'>
-          {[1, 2, 3, 4, 5].map((item) => (
-            <SurveyItem key={item} />
-          ))}
+        <div className='survey-content__list' data-testid='survey-list'>
+          <SurveyItemLoader />
         </div>
       </section>
     </main>
