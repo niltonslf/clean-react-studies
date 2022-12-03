@@ -3,8 +3,7 @@ import { useContext } from 'react'
 import { SurveyModel } from '@/domain/models'
 import { SurveyContext } from '@/presentation/pages/Survey/context/survey-context'
 
-import SurveyItem from '../SurveyItem'
-import SurveyItemLoader from '../SurveyItemLoader'
+import { SurveyItem, SurveyItemLoader } from '../'
 
 import './survey-list.styles.scss'
 

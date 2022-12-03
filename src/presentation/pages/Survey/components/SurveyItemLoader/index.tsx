@@ -4,7 +4,7 @@ interface SurveyItemLoaderProps {
   any?: any
 }
 
-const SurveyItemLoader: React.FC<SurveyItemLoaderProps> = () => {
+export const SurveyItemLoader: React.FC<SurveyItemLoaderProps> = () => {
   return (
     <>
       {[1, 2, 3, 4].map((item) => (
@@ -29,5 +29,3 @@ const SurveyItemLoader: React.FC<SurveyItemLoaderProps> = () => {
   )
 }
 SurveyItemLoader.displayName = 'SurveyItemLoader'
-
-export default SurveyItemLoader

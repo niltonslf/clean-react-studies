@@ -4,7 +4,7 @@ import { SurveyModel } from '@/domain/models'
 import { LoadSurveyList } from '@/domain/usecases/load-survey-list'
 import { Header } from '@/presentation/components'
 
-import { SurveyList } from './components/SurveyList'
+import { SurveyError, SurveyList } from './components'
 import { SurveyContext } from './context/survey-context'
 
 import './survey.styles.scss'
@@ -34,7 +34,7 @@ const Survey: React.FC<SurveyProps> = ({ loadSurveyList }) => {
         </h1>
 
         <SurveyContext.Provider value={{ items, error, setItems, setError }}>
-          {error ? <div data-testid='error'>{error}</div> : <SurveyList />}
+          {error ? <SurveyError /> : <SurveyList />}
         </SurveyContext.Provider>
       </section>
     </main>

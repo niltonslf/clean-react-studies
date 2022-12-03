@@ -9,7 +9,7 @@ type SurveyItemProps = {
   survey: SurveyModel
 }
 
-const SurveyItem: React.FC<SurveyItemProps> = ({ survey }) => {
+export const SurveyItem: React.FC<SurveyItemProps> = ({ survey }) => {
   const iconName = survey.didAnswer ? IconName.thumbUp : IconName.thumbDown
 
   return (
@@ -38,4 +38,3 @@ const SurveyItem: React.FC<SurveyItemProps> = ({ survey }) => {
   )
 }
 SurveyItem.displayName = 'SurveyItem'
-export default SurveyItem
