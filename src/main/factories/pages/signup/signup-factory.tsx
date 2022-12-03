@@ -7,11 +7,9 @@ interface SignUpFactoryProps {
   any?: any
 }
 
-const SignUpFactory: React.FC<SignUpFactoryProps> = () => {
+export const SignUpFactory: React.FC<SignUpFactoryProps> = () => {
   return (
     <SignUp addAccount={makeRemoteAddAccountFactory()} validation={makeSignUpValidationFactory()} />
   )
 }
 SignUpFactory.displayName = 'SignUpFactory'
-
-export default SignUpFactory

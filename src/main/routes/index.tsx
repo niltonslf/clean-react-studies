@@ -4,11 +4,9 @@ import {
   getCurrentAccountAdapter,
   setCurrentAccountAdapter,
 } from '@/main/adapters/current-account-adapter'
-import LoginFactory from '@/main/factories/pages/login/login-factory'
-import SignUpFactory from '@/main/factories/pages/signup/signup-factory'
+import { LoginFactory, SignUpFactory, SurveyFactory } from '@/main/factories/pages'
 import { PrivateRoute } from '@/presentation/components'
 import { ApiContext } from '@/presentation/context'
-import SurveyList from '@/presentation/pages/Survey'
 
 const Routes: React.FC = () => {
   return (
@@ -22,7 +20,7 @@ const Routes: React.FC = () => {
         <Router>
           <Route path='/login' element={<LoginFactory />} />
           <Route path='/signup' element={<SignUpFactory />} />
-          <Route path='/' element={<PrivateRoute component={<SurveyList />} />} />
+          <Route path='/' element={<PrivateRoute component={<SurveyFactory />} />} />
         </Router>
       </BrowserRouter>
     </ApiContext.Provider>

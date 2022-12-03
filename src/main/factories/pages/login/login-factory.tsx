@@ -8,7 +8,7 @@ interface LoginFactoryProps {
   any?: any
 }
 
-const LoginFactory: React.FC<LoginFactoryProps> = () => {
+export const LoginFactory: React.FC<LoginFactoryProps> = () => {
   return (
     <Login
       authentication={makeRemoteAuthenticationFactory()}
@@ -17,5 +17,3 @@ const LoginFactory: React.FC<LoginFactoryProps> = () => {
   )
 }
 LoginFactory.displayName = 'LoginFactory'
-
-export default LoginFactory
