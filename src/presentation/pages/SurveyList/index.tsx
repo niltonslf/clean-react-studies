@@ -1,9 +1,26 @@
+import { useEffect, useState } from 'react'
+
+import { SurveyModel } from '@/domain/models'
+import { LoadSurveyList } from '@/domain/usecases/load-survey-list'
 import { Header } from '@/presentation/components'
 
 import SurveyItemLoader from './components/SurveyItemLoader'
+
 import './survey-list-styles.scss'
 
-const SurveyList: React.FC = () => {
+type SurveyListProps = {
+  loadSurveyList: LoadSurveyList
+}
+
+const SurveyList: React.FC<SurveyListProps> = ({ loadSurveyList }) => {
+  const [, setItems] = useState<SurveyModel[]>([])
+
+  useEffect(() => {
+    loadSurveyList.loadAll().then((response) => {
+      if (response) setItems(response)
+    })
+  }, [])
+
   return (
     <main className='survey-container'>
       <Header />
