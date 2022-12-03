@@ -1,4 +1,7 @@
 import { SurveyModel } from '@/domain/models'
+
+import { Icon } from '../'
+import { IconName } from '../Icon'
 import './survey.styles.scss'
 
 type SurveyItemProps = {
@@ -6,11 +9,11 @@ type SurveyItemProps = {
 }
 
 const SurveyItem: React.FC<SurveyItemProps> = ({ survey }) => {
+  const iconName = survey.didAnswer ? IconName.thumbUp : IconName.thumbDown
+
   return (
     <article className='survey'>
-      <div className='icon-wrap green'>
-        <img src='/assets/thumb-up.png' alt='' data-testid='icon' />
-      </div>
+      <Icon iconName={iconName} />
       <div className='content'>
         <div className='content-date'>
           <span data-testid='day' className='day'>
@@ -34,5 +37,4 @@ const SurveyItem: React.FC<SurveyItemProps> = ({ survey }) => {
   )
 }
 SurveyItem.displayName = 'SurveyItem'
-
 export default SurveyItem
