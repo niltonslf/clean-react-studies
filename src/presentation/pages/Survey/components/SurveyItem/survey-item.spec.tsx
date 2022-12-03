@@ -3,7 +3,7 @@ import { describe, expect, test } from 'vitest'
 import { mockSurveyModel } from '@/domain/test'
 import { render, screen } from '@testing-library/react'
 
-import SurveyItem from '.'
+import { SurveyItem } from '.'
 
 const makeSut = (survey = mockSurveyModel()) => {
   render(<SurveyItem survey={survey} />)
