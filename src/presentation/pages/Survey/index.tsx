@@ -4,16 +4,16 @@ import { SurveyModel } from '@/domain/models'
 import { LoadSurveyList } from '@/domain/usecases/load-survey-list'
 import { Header } from '@/presentation/components'
 
-import SurveyItem from './components/SurveyItem'
-import SurveyItemLoader from './components/SurveyItemLoader'
+import { SurveyList } from './components/SurveyList'
+import { SurveyContext } from './context/survey-context'
 
-import './survey-list-styles.scss'
+import './survey.styles.scss'
 
-type SurveyListProps = {
+type SurveyProps = {
   loadSurveyList: LoadSurveyList
 }
 
-const SurveyList: React.FC<SurveyListProps> = ({ loadSurveyList }) => {
+const Survey: React.FC<SurveyProps> = ({ loadSurveyList }) => {
   const [items, setItems] = useState<SurveyModel[] | null>([])
   const [error, setError] = useState(null)
 
@@ -33,20 +33,12 @@ const SurveyList: React.FC<SurveyListProps> = ({ loadSurveyList }) => {
           Enquetes
         </h1>
 
-        {error ? (
-          <div data-testid='error'>{error}</div>
-        ) : (
-          <div className='survey-content__list' data-testid='survey-list'>
-            {items?.length ? (
-              items.map((survey) => <SurveyItem survey={survey} key={survey.id} />)
-            ) : (
-              <SurveyItemLoader />
-            )}
-          </div>
-        )}
+        <SurveyContext.Provider value={{ items, error, setItems, setError }}>
+          {error ? <div data-testid='error'>{error}</div> : <SurveyList />}
+        </SurveyContext.Provider>
       </section>
     </main>
   )
 }
-SurveyList.displayName = 'SurveyList'
-export default SurveyList
+Survey.displayName = 'Survey'
+export default Survey

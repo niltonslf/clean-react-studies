@@ -1,6 +1,7 @@
 import { SurveyModel } from '@/domain/models'
 
-import { Icon } from '../'
+import { Icon } from '..'
+
 import { IconName } from '../Icon'
 import './survey.styles.scss'
 

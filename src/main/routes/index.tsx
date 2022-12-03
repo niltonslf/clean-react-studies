@@ -8,7 +8,7 @@ import LoginFactory from '@/main/factories/pages/login/login-factory'
 import SignUpFactory from '@/main/factories/pages/signup/signup-factory'
 import { PrivateRoute } from '@/presentation/components'
 import { ApiContext } from '@/presentation/context'
-import SurveyList from '@/presentation/pages/SurveyList'
+import SurveyList from '@/presentation/pages/Survey'
 
 const Routes: React.FC = () => {
   return (
