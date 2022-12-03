@@ -24,5 +24,4 @@ export const mockSurveyListModel = (): SurveyModel[] => [
   mockSurveyModel(),
   mockSurveyModel(),
   mockSurveyModel(),
-  mockSurveyModel(),
 ]
