@@ -18,11 +18,8 @@ export class AuthorizeHttpGetClientDecorator implements HttpGetClient {
       })
     }
 
-    await this.httpGetClient.get(params)
+    const response = await this.httpGetClient.get(params)
 
-    return {
-      statusCode: 200,
-      body: {},
-    }
+    return response
   }
 }
